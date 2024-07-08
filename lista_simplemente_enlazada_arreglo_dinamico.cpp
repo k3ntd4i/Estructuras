@@ -11,16 +11,16 @@ class Lista
 public:
     Lista() : arreglo{ new T[1]{} }, capacidad{ 1 }, longitud{ 0 } {}
 
-    Lista(int capacidad_inicial) :
-        capacidad{ capacidad_inicial }, longitud{ 0 }
+    Lista(int capacidad_inicial)
+        : capacidad{ capacidad_inicial }, longitud{ 0 }
+    {
+        if (capacidad_inicial < 1)
         {
-            if (capacidad_inicial < 1)
-            {
-                throw std::out_of_range("La capacidad inicial debe ser mayor o igual a 1");
-            }
-
-            this->arreglo = new T[capacidad_inicial]{};
+            throw std::out_of_range("La capacidad inicial debe ser mayor o igual a 1");
         }
+
+        this->arreglo = new T[capacidad_inicial]{};
+    }
 
     ~Lista() { delete[] this->arreglo; }
 
