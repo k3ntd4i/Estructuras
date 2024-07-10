@@ -78,12 +78,12 @@ public:
         return this->elemento;
     }
 
-    void set_left_child(ArbolBinario<T> &sub_arbol_izquierdo)
+    void set_left_child(ArbolBinario<T> *sub_arbol_izquierdo)
     {
         this->hijo_izquierdo = sub_arbol_izquierdo;
     }
 
-    void set_right_child(ArbolBinario<T> &sub_arbol_derecho)
+    void set_right_child(ArbolBinario<T> *sub_arbol_derecho)
     {
         this->hijo_derecho = sub_arbol_derecho;
     }
@@ -135,22 +135,22 @@ public:
     }
 
 private:
-    ArbolBinario<T> pre_order_recursivo(const ArbolBinario<T> &arbol)
+    ArbolBinario<T> pre_order_recursivo(ArbolBinario<T> *arbol)
     {
         // por hacer
     }
     
-    ArbolBinario<T> in_order_recursivo(const ArbolBinario<T> &arbol)
+    ArbolBinario<T> in_order_recursivo(ArbolBinario<T> *arbol)
     {
         // por hacer
     }
 
-    ArbolBinario<T> post_order_recursivo(const ArbolBinario<T> &arbol)
+    ArbolBinario<T> post_order_recursivo(ArbolBinario<T> *arbol)
     {
         // por hacer
     }
 
-    ArbolBinario<T> level_order_recursivo(const ArbolBinario<T> &arbol)
+    ArbolBinario<T> level_order_recursivo(ArbolBinario<T> *arbol)
     {
         // por hacer
     }
@@ -165,6 +165,10 @@ int main()
     ArbolBinario<int> arbol2{2, nullptr, &arbol1};
     std::cout << "[+] Altura: " << arbol2.height() << '\n';
     std::cout << "[+] Cantidad nodos: " << arbol2.size() << '\n';
+
+    ArbolBinario<int> arbol3{5};
+    arbol3.set_left_child(&arbol1);
+    arbol3.set_right_child(&arbol2);
 
     return 0;
 }
