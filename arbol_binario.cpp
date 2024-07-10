@@ -38,7 +38,7 @@ public:
             altura_maxima = sub_arbol_izquierdo->altura;
             this->cantidad_nodos += sub_arbol_izquierdo->cantidad_nodos;
         }
-        
+
         if (sub_arbol_derecho != nullptr)
         {
             altura_maxima = std::max(altura_maxima, sub_arbol_derecho->altura);
@@ -80,11 +80,49 @@ public:
 
     void set_left_child(ArbolBinario<T> *sub_arbol_izquierdo)
     {
+        if (sub_arbol_izquierdo != nullptr)
+        {
+            if (this->hijo_izquierdo != nullptr)
+            {
+                this->cantidad_nodos -= this->hijo_izquierdo->cantidad_nodos;
+            }
+
+            this->cantidad_nodos += sub_arbol_izquierdo->cantidad_nodos;
+
+            if (this->hijo_derecho != nullptr)
+            {
+                this->altura = std::max(this->hijo_derecho->altura, sub_arbol_izquierdo->altura) + 1;
+            }
+            else
+            {
+                this->altura = sub_arbol_izquierdo->altura + 1;
+            }
+        }
+
         this->hijo_izquierdo = sub_arbol_izquierdo;
     }
 
     void set_right_child(ArbolBinario<T> *sub_arbol_derecho)
     {
+        if (sub_arbol_derecho != nullptr)
+        {
+            if (this->hijo_derecho != nullptr)
+            {
+                this->cantidad_nodos -= this->hijo_derecho->cantidad_nodos;
+            }
+
+            this->cantidad_nodos += sub_arbol_derecho->cantidad_nodos;
+
+            if (this->hijo_izquierdo != nullptr)
+            {
+                this->altura = std::max(this->hijo_izquierdo->altura, sub_arbol_derecho->altura) + 1;
+            }
+            else
+            {
+                this->altura = sub_arbol_derecho->altura + 1;
+            }
+        }
+
         this->hijo_derecho = sub_arbol_derecho;
     }
 
@@ -97,11 +135,32 @@ public:
     void make_tree
     (
         const T &elemento_raiz,
-        ArbolBinario<T> *arbol_izquierdo,
-        ArbolBinario<T> *arbol_derecho
+        ArbolBinario<T> *sub_arbol_izquierdo,
+        ArbolBinario<T> *sub_arbol_derecho
     )
     {
-        // por hacer
+        this->elemento = elemento_raiz;
+        this->hijo_izquierdo = sub_arbol_izquierdo;
+        this->hijo_derecho = sub_arbol_derecho;
+
+        this->cantidad_nodos = 1;
+        this->altura = 1;
+
+        int altura_maxima{ 0 };
+
+        if (sub_arbol_izquierdo != nullptr)
+        {
+            altura_maxima = sub_arbol_izquierdo->altura;
+            this->cantidad_nodos += sub_arbol_izquierdo->cantidad_nodos;
+        }
+
+        if (sub_arbol_derecho != nullptr)
+        {
+            altura_maxima = std::max(altura_maxima, sub_arbol_derecho->altura);
+            this->cantidad_nodos += sub_arbol_derecho->cantidad_nodos;
+        }
+
+        this->altura += altura_maxima;
     }
 
     ArbolBinario<T> remove_left_subtree()
@@ -158,17 +217,47 @@ private:
 
 int main()
 {
-    ArbolBinario<int> arbol1{1};
+    ArbolBinario<char> arbol1{'A'};
     std::cout << "[+] Altura: " << arbol1.height() << '\n';
     std::cout << "[+] Cantidad nodos: " << arbol1.size() << "\n\n";
 
-    ArbolBinario<int> arbol2{2, nullptr, &arbol1};
+    ArbolBinario<char> arbol2{'B'};
     std::cout << "[+] Altura: " << arbol2.height() << '\n';
-    std::cout << "[+] Cantidad nodos: " << arbol2.size() << '\n';
+    std::cout << "[+] Cantidad nodos: " << arbol2.size() << "\n\n";
 
-    ArbolBinario<int> arbol3{5};
-    arbol3.set_left_child(&arbol1);
-    arbol3.set_right_child(&arbol2);
+    ArbolBinario<char> arbol3{'C'};
+    std::cout << "[+] Altura: " << arbol3.height() << '\n';
+    std::cout << "[+] Cantidad nodos: " << arbol3.size() << "\n\n";
+
+    ArbolBinario<char> arbol4{'D'};
+    ArbolBinario<char> arbol5{'E'};
+    ArbolBinario<char> arbol6{'F'};
+    ArbolBinario<char> arbol7{'G'};
+    ArbolBinario<char> arbol8{'H'};
+    ArbolBinario<char> arbol9{'I'};
+    ArbolBinario<char> arbol10{'J'};
+
+    arbol1.set_left_child(&arbol2);
+
+    arbol2.set_left_child(&arbol4);
+    arbol2.set_right_child(&arbol5);
+
+    arbol1.set_right_child(&arbol3);
+    arbol3.set_left_child(&arbol6);
+
+    arbol6.set_left_child(&arbol7);
+    arbol7.set_left_child(&arbol8);
+    arbol8.set_left_child(&arbol9);
+    arbol9.set_left_child(&arbol10);
+
+    std::cout << "[+] Altura: " << arbol1.height() << '\n';
+    std::cout << "[+] Cantidad nodos: " << arbol1.size() << "\n\n";
+
+    std::cout << "[+] Altura: " << arbol2.height() << '\n';
+    std::cout << "[+] Cantidad nodos: " << arbol2.size() << "\n\n";
+
+    std::cout << "[+] Altura: " << arbol3.height() << '\n';
+    std::cout << "[+] Cantidad nodos: " << arbol3.size() << "\n\n";
 
     return 0;
 }
