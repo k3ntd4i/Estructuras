@@ -97,8 +97,8 @@ public:
     void make_tree
     (
         const T &elemento_raiz,
-        ArbolBinario<T> &arbol_izquierdo,
-        ArbolBinario<T> &arbol_derecho
+        ArbolBinario<T> *arbol_izquierdo,
+        ArbolBinario<T> *arbol_derecho
     )
     {
         // por hacer
