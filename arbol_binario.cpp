@@ -8,7 +8,7 @@ class ArbolBinario
     ArbolBinario<T> *hijo_derecho{ nullptr };
 
     int cantidad_nodos{ 0 };
-    int altura{ 1 };
+    int altura{ 0 };
 
 public:
     ArbolBinario() = default;
@@ -27,12 +27,25 @@ public:
         : elemento{ elemento_inicial }
         , hijo_izquierdo{ sub_arbol_izquierdo }
         , hijo_derecho{ sub_arbol_derecho }
-        , cantidad_nodos{ 1 }
     {
-        if (this->hijo_izquierdo != nullptr || this->hijo_derecho != nullptr)
+        this->cantidad_nodos = 1;
+        this->altura = 1;
+
+        int altura_maxima{ 0 };
+
+        if (sub_arbol_izquierdo != nullptr)
         {
-            this->altura = 2;
+            altura_maxima = sub_arbol_izquierdo->altura;
+            this->cantidad_nodos += sub_arbol_izquierdo->cantidad_nodos;
         }
+        
+        if (sub_arbol_derecho != nullptr)
+        {
+            altura_maxima = std::max(altura_maxima, sub_arbol_derecho->altura);
+            this->cantidad_nodos += sub_arbol_derecho->cantidad_nodos;
+        }
+
+        this->altura += altura_maxima;
     };
 
     bool is_empty()
@@ -40,7 +53,7 @@ public:
         return (cantidad_nodos == 0) ? true : false;
     }
 
-    int size() // La cantidad de nodos totales
+    int size()
     {
         return this->cantidad_nodos;
     }
@@ -65,8 +78,6 @@ public:
         return this->elemento;
     }
 
-    // los setters y el metodo "make_tree" no tomaran por copia los argumentos que se le pasen,
-    // es decir, si se modifican los sub-arboles, tambien modificaran los arboles originales
     void set_left_child(ArbolBinario<T> &sub_arbol_izquierdo)
     {
         this->hijo_izquierdo = sub_arbol_izquierdo;
@@ -147,7 +158,13 @@ private:
 
 int main()
 {
-    ArbolBinario<int> arbol{};
+    ArbolBinario<int> arbol1{1};
+    std::cout << "[+] Altura: " << arbol1.height() << '\n';
+    std::cout << "[+] Cantidad nodos: " << arbol1.size() << "\n\n";
+
+    ArbolBinario<int> arbol2{2, nullptr, &arbol1};
+    std::cout << "[+] Altura: " << arbol2.height() << '\n';
+    std::cout << "[+] Cantidad nodos: " << arbol2.size() << '\n';
 
     return 0;
 }
