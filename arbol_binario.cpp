@@ -225,15 +225,11 @@ private:
         ArbolBinario<T> *nodo_padre{ this->raiz };
         int diferencia_nodos{ this->cantidad_nodos - cantidad_nodos_anterior };
 
-        int diferencia_altura{};
+        int diferencia_altura{ 0 };
 
         if ((this->altura + 1) > nodo_padre->altura)
         {
             diferencia_altura = this->altura - altura_anterior;
-        }
-        else
-        {
-            diferencia_altura = 0;
         }
 
         do
