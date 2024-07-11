@@ -83,35 +83,9 @@ public:
 
     void set_left_child(ArbolBinario<T> *sub_arbol_izquierdo)
     {
-        int cantidad_nodos_anterior{ this->cantidad_nodos };
-
         if (sub_arbol_izquierdo != nullptr)
         {
-            sub_arbol_izquierdo->raiz = this;
-
-            if (this->hijo_izquierdo != nullptr)
-            {
-                this->cantidad_nodos -= this->hijo_izquierdo->cantidad_nodos;
-            }
-
-            this->cantidad_nodos += sub_arbol_izquierdo->cantidad_nodos;
-
-            if (this->hijo_derecho != nullptr)
-            {
-                this->altura = std::max(this->hijo_derecho->altura, sub_arbol_izquierdo->altura) + 1;
-            }
-            else
-            {
-                this->altura = sub_arbol_izquierdo->altura + 1;
-            }
-
-            ArbolBinario<T> *nodo_padre{ this->raiz };
-            int diferencia{ this->cantidad_nodos - cantidad_nodos_anterior };
-            while (nodo_padre != nullptr)
-            {
-                nodo_padre->cantidad_nodos += diferencia;
-                nodo_padre = nodo_padre->raiz;
-            }
+            set_child(sub_arbol_izquierdo, true);
         }
 
         this->hijo_izquierdo = sub_arbol_izquierdo;
@@ -119,35 +93,9 @@ public:
 
     void set_right_child(ArbolBinario<T> *sub_arbol_derecho)
     {
-        int cantidad_nodos_anterior{ this->cantidad_nodos };
-
         if (sub_arbol_derecho != nullptr)
         {
-            sub_arbol_derecho->raiz = this;
-
-            if (this->hijo_derecho != nullptr)
-            {
-                this->cantidad_nodos -= this->hijo_derecho->cantidad_nodos;
-            }
-
-            this->cantidad_nodos += sub_arbol_derecho->cantidad_nodos;
-
-            if (this->hijo_izquierdo != nullptr)
-            {
-                this->altura = std::max(this->hijo_izquierdo->altura, sub_arbol_derecho->altura) + 1;
-            }
-            else
-            {
-                this->altura = sub_arbol_derecho->altura + 1;
-            }
-
-            ArbolBinario<T> *nodo_padre{ this->raiz };
-            int diferencia{ this->cantidad_nodos - cantidad_nodos_anterior };
-            while (nodo_padre != nullptr)
-            {
-                nodo_padre->cantidad_nodos += diferencia;
-                nodo_padre = nodo_padre->raiz;
-            }
+            set_child(sub_arbol_derecho, false);
         }
 
         this->hijo_derecho = sub_arbol_derecho;
@@ -221,6 +169,51 @@ public:
     }
 
 private:
+    void set_child(ArbolBinario<T> *sub_arbol, bool izquierdo)
+    {
+        ArbolBinario<T> *hijo{};
+        ArbolBinario<T> *hermano{};
+
+        if (izquierdo)
+        { 
+            hijo = this->hijo_izquierdo;
+            hermano = this->hijo_derecho;
+        }
+        else
+        {
+            hijo = this->hijo_derecho;
+            hermano = this->hijo_izquierdo;
+        }
+
+        int cantidad_nodos_anterior{ this->cantidad_nodos };
+
+        sub_arbol->raiz = this;
+
+        if (hijo != nullptr)
+        {
+            this->cantidad_nodos -= hijo->cantidad_nodos;
+        }
+
+        this->cantidad_nodos += sub_arbol->cantidad_nodos;
+
+        if (hermano != nullptr)
+        {
+            this->altura = std::max(hermano->altura, sub_arbol->altura) + 1;
+        }
+        else
+        {
+            this->altura = sub_arbol->altura + 1;
+        }
+
+        ArbolBinario<T> *nodo_padre{ this->raiz };
+        int diferencia{ this->cantidad_nodos - cantidad_nodos_anterior };
+        while (nodo_padre != nullptr)
+        {
+            nodo_padre->cantidad_nodos += diferencia;
+            nodo_padre = nodo_padre->raiz;
+        }
+    }
+
     ArbolBinario<T> pre_order_recursivo(ArbolBinario<T> *arbol)
     {
         // por hacer
