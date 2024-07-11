@@ -171,34 +171,34 @@ public:
 private:
     void set_child(ArbolBinario<T> *sub_arbol, bool izquierdo)
     {
-        ArbolBinario<T> *hijo{};
-        ArbolBinario<T> *hermano{};
+        ArbolBinario<T> *this_hijo{};
+        ArbolBinario<T> *hermano_this_hijo{};
 
         if (izquierdo)
         { 
-            hijo = this->hijo_izquierdo;
-            hermano = this->hijo_derecho;
+            this_hijo = this->hijo_izquierdo;
+            hermano_this_hijo = this->hijo_derecho;
         }
         else
         {
-            hijo = this->hijo_derecho;
-            hermano = this->hijo_izquierdo;
+            this_hijo = this->hijo_derecho;
+            hermano_this_hijo = this->hijo_izquierdo;
         }
 
         int cantidad_nodos_anterior{ this->cantidad_nodos };
 
         sub_arbol->raiz = this;
 
-        if (hijo != nullptr)
+        if (this_hijo != nullptr)
         {
-            this->cantidad_nodos -= hijo->cantidad_nodos;
+            this->cantidad_nodos -= this_hijo->cantidad_nodos;
         }
 
         this->cantidad_nodos += sub_arbol->cantidad_nodos;
 
-        if (hermano != nullptr)
+        if (hermano_this_hijo != nullptr)
         {
-            this->altura = std::max(hermano->altura, sub_arbol->altura) + 1;
+            this->altura = std::max(hermano_this_hijo->altura, sub_arbol->altura) + 1;
         }
         else
         {
