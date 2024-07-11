@@ -10,6 +10,8 @@ class ArbolBinario
     int cantidad_nodos{ 0 };
     int altura{ 0 };
 
+    ArbolBinario<T> *raiz{ nullptr };
+
 public:
     ArbolBinario() = default;
 
@@ -27,6 +29,7 @@ public:
         : elemento{ elemento_inicial }
         , hijo_izquierdo{ sub_arbol_izquierdo }
         , hijo_derecho{ sub_arbol_derecho }
+        , raiz{ nullptr }
     {
         this->cantidad_nodos = 1;
         this->altura = 1;
@@ -80,8 +83,12 @@ public:
 
     void set_left_child(ArbolBinario<T> *sub_arbol_izquierdo)
     {
+        int cantidad_nodos_anterior{ this->cantidad_nodos };
+
         if (sub_arbol_izquierdo != nullptr)
         {
+            sub_arbol_izquierdo->raiz = this;
+
             if (this->hijo_izquierdo != nullptr)
             {
                 this->cantidad_nodos -= this->hijo_izquierdo->cantidad_nodos;
@@ -97,6 +104,14 @@ public:
             {
                 this->altura = sub_arbol_izquierdo->altura + 1;
             }
+
+            ArbolBinario<T> *nodo_padre{ this->raiz };
+            int diferencia{ this->cantidad_nodos - cantidad_nodos_anterior };
+            while (nodo_padre != nullptr)
+            {
+                nodo_padre->cantidad_nodos += diferencia;
+                nodo_padre = nodo_padre->raiz;
+            }
         }
 
         this->hijo_izquierdo = sub_arbol_izquierdo;
@@ -104,8 +119,12 @@ public:
 
     void set_right_child(ArbolBinario<T> *sub_arbol_derecho)
     {
+        int cantidad_nodos_anterior{ this->cantidad_nodos };
+
         if (sub_arbol_derecho != nullptr)
         {
+            sub_arbol_derecho->raiz = this;
+
             if (this->hijo_derecho != nullptr)
             {
                 this->cantidad_nodos -= this->hijo_derecho->cantidad_nodos;
@@ -120,6 +139,14 @@ public:
             else
             {
                 this->altura = sub_arbol_derecho->altura + 1;
+            }
+
+            ArbolBinario<T> *nodo_padre{ this->raiz };
+            int diferencia{ this->cantidad_nodos - cantidad_nodos_anterior };
+            while (nodo_padre != nullptr)
+            {
+                nodo_padre->cantidad_nodos += diferencia;
+                nodo_padre = nodo_padre->raiz;
             }
         }
 
