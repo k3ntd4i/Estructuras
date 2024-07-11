@@ -118,6 +118,9 @@ public:
         this->hijo_izquierdo = sub_arbol_izquierdo;
         this->hijo_derecho = sub_arbol_derecho;
 
+        int cantidad_nodos_anterior{ this->cantidad_nodos };
+        int altura_anterior{ this->altura };
+
         this->cantidad_nodos = 1;
         this->altura = 1;
 
@@ -136,6 +139,11 @@ public:
         }
 
         this->altura += altura_maxima;
+
+        if (this->raiz != nullptr)
+        {
+            actualizar_datos(cantidad_nodos_anterior, altura_anterior);
+        }
     }
 
     ArbolBinario<T> remove_left_subtree()
@@ -185,9 +193,8 @@ private:
             hermano_this_hijo = this->hijo_izquierdo;
         }
 
-        int cantidad_nodos_anterior{ this->cantidad_nodos };
-
         sub_arbol->raiz = this;
+        int cantidad_nodos_anterior{ this->cantidad_nodos };
 
         if (this_hijo != nullptr)
         {
@@ -195,6 +202,8 @@ private:
         }
 
         this->cantidad_nodos += sub_arbol->cantidad_nodos;
+
+        int altura_anterior{ this->altura };
 
         if (hermano_this_hijo != nullptr)
         {
@@ -205,13 +214,34 @@ private:
             this->altura = sub_arbol->altura + 1;
         }
 
-        ArbolBinario<T> *nodo_padre{ this->raiz };
-        int diferencia{ this->cantidad_nodos - cantidad_nodos_anterior };
-        while (nodo_padre != nullptr)
+        if (this->raiz != nullptr)
         {
-            nodo_padre->cantidad_nodos += diferencia;
-            nodo_padre = nodo_padre->raiz;
+            actualizar_datos(cantidad_nodos_anterior, altura_anterior);
         }
+    }
+
+    void actualizar_datos(int cantidad_nodos_anterior, int altura_anterior)
+    {
+        ArbolBinario<T> *nodo_padre{ this->raiz };
+        int diferencia_nodos{ this->cantidad_nodos - cantidad_nodos_anterior };
+
+        int diferencia_altura{};
+
+        if ((this->altura + 1) > nodo_padre->altura)
+        {
+            diferencia_altura = this->altura - altura_anterior;
+        }
+        else
+        {
+            diferencia_altura = 0;
+        }
+
+        do
+        {
+            nodo_padre->cantidad_nodos += diferencia_nodos;
+            nodo_padre->altura += diferencia_altura;
+            nodo_padre = nodo_padre->raiz;
+        } while (nodo_padre != nullptr);
     }
 
     ArbolBinario<T> pre_order_recursivo(ArbolBinario<T> *arbol)
@@ -263,8 +293,8 @@ int main()
     arbol2.set_right_child(&arbol5);
 
     arbol1.set_right_child(&arbol3);
-    arbol3.set_left_child(&arbol6);
 
+    arbol3.set_left_child(&arbol6);
     arbol6.set_left_child(&arbol7);
     arbol7.set_left_child(&arbol8);
     arbol8.set_left_child(&arbol9);
