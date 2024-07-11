@@ -66,12 +66,17 @@ public:
         return this->altura;
     }
 
-    ArbolBinario<T> get_left_child()
+    ArbolBinario<T> *get_parent()
+    {
+        return this->raiz;
+    }
+
+    ArbolBinario<T> *get_left_child()
     {
         return this->hijo_izquierdo;
     }
 
-    ArbolBinario<T> get_right_child()
+    ArbolBinario<T> *get_right_child()
     {
         return this->hijo_derecho;
     }
@@ -109,12 +114,22 @@ public:
     // este metodo reemplaza el arbol existente en la instancia por uno nuevo
     void make_tree
     (
-        const T &elemento_raiz,
+        const T &elemento_inicial,
         ArbolBinario<T> *sub_arbol_izquierdo,
         ArbolBinario<T> *sub_arbol_derecho
     )
     {
-        this->elemento = elemento_raiz;
+        this->elemento = elemento_inicial;
+
+        if (this->hijo_izquierdo != nullptr)
+        {
+            this->hijo_izquierdo->raiz = nullptr;
+        }
+        if (this->hijo_derecho != nullptr)
+        {
+            this->hijo_derecho->raiz = nullptr;
+        }
+
         this->hijo_izquierdo = sub_arbol_izquierdo;
         this->hijo_derecho = sub_arbol_derecho;
 
@@ -263,17 +278,19 @@ private:
 
 int main()
 {
+    std::cout << "- Inicializacion ---------------------- \n\n";
+
     ArbolBinario<char> arbol1{'A'};
-    std::cout << "[+] Altura: " << arbol1.height() << '\n';
-    std::cout << "[+] Cantidad nodos: " << arbol1.size() << "\n\n";
+    std::cout << "[+] Altura " << arbol1.get_element() << ": " << arbol1.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol1.get_element() << ": " << arbol1.size() << "\n\n";
 
     ArbolBinario<char> arbol2{'B'};
-    std::cout << "[+] Altura: " << arbol2.height() << '\n';
-    std::cout << "[+] Cantidad nodos: " << arbol2.size() << "\n\n";
+    std::cout << "[+] Altura " << arbol2.get_element() << ": " << arbol2.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol2.get_element() << ": " << arbol2.size() << "\n\n";
 
     ArbolBinario<char> arbol3{'C'};
-    std::cout << "[+] Altura: " << arbol3.height() << '\n';
-    std::cout << "[+] Cantidad nodos: " << arbol3.size() << "\n\n";
+    std::cout << "[+] Altura " << arbol3.get_element() << ": " << arbol3.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol3.get_element() << ": " << arbol3.size() << "\n\n";
 
     ArbolBinario<char> arbol4{'D'};
     ArbolBinario<char> arbol5{'E'};
@@ -296,14 +313,82 @@ int main()
     arbol8.set_left_child(&arbol9);
     arbol9.set_left_child(&arbol10);
 
-    std::cout << "[+] Altura: " << arbol1.height() << '\n';
-    std::cout << "[+] Cantidad nodos: " << arbol1.size() << "\n\n";
+    std::cout << "- Arbol total ---------------------- \n\n";
 
-    std::cout << "[+] Altura: " << arbol2.height() << '\n';
-    std::cout << "[+] Cantidad nodos: " << arbol2.size() << "\n\n";
+    std::cout << "[+] Altura " << arbol1.get_element() << ": " << arbol1.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol1.get_element() << ": " << arbol1.size() << "\n\n";
 
-    std::cout << "[+] Altura: " << arbol3.height() << '\n';
-    std::cout << "[+] Cantidad nodos: " << arbol3.size() << "\n\n";
+    std::cout << "[+] Altura " << arbol2.get_element() << ": " << arbol2.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol2.get_element() << ": " << arbol2.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol3.get_element() << ": " << arbol3.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol3.get_element() << ": " << arbol3.size() << "\n\n";
+
+    ArbolBinario<char> arbol11{'K'};
+    arbol8.set_right_child(&arbol11);
+
+    std::cout << "- Arbol modificado ---------------------- \n\n";
+
+    std::cout << "[+] Altura " << arbol1.get_element() << ": " << arbol1.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol1.get_element() << ": " << arbol1.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol2.get_element() << ": " << arbol2.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol2.get_element() << ": " << arbol2.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol3.get_element() << ": " << arbol3.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol3.get_element() << ": " << arbol3.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol6.get_element() << ": " << arbol6.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol6.get_element() << ": " << arbol6.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol7.get_element() << ": " << arbol7.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol7.get_element() << ": " << arbol7.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol8.get_element() << ": " << arbol8.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol8.get_element() << ": " << arbol8.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol11.get_element() << ": " << arbol11.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol11.get_element() << ": " << arbol11.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol10.get_element() << ": " << arbol10.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol10.get_element() << ": " << arbol10.size() << "\n\n";
+
+
+    std::cout << "- Test make_tree ---------------------- \n\n";
+
+    std::cout << "[+] Altura antes " << arbol7.get_element() << ": " << arbol7.height() << '\n';
+    std::cout << "[+] Cantidad nodos antes " << arbol7.get_element() << ": " << arbol7.size() << '\n';
+    std::cout << "[+] Nodo padre de G: " << arbol7.get_parent()->get_element() << "\n\n";
+    arbol7.make_tree('X', nullptr, nullptr);
+    std::cout << "[+] Altura despues " << arbol7.get_element() << ": " << arbol7.height() << '\n';
+    std::cout << "[+] Cantidad nodos despues " << arbol7.get_element() << ": " << arbol7.size() << '\n';
+    std::cout << "[+] Nodo padre de X: " << arbol7.get_parent()->get_element() << "\n\n";
+
+    std::cout << "- Arbol make tree ---------------------- \n\n";
+
+    std::cout << "[+] Altura " << arbol1.get_element() << ": " << arbol1.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol1.get_element() << ": " << arbol1.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol2.get_element() << ": " << arbol2.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol2.get_element() << ": " << arbol2.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol3.get_element() << ": " << arbol3.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol3.get_element() << ": " << arbol3.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol6.get_element() << ": " << arbol6.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol6.get_element() << ": " << arbol6.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol7.get_element() << ": " << arbol7.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol7.get_element() << ": " << arbol7.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol8.get_element() << ": " << arbol8.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol8.get_element() << ": " << arbol8.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol11.get_element() << ": " << arbol11.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol11.get_element() << ": " << arbol11.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol10.get_element() << ": " << arbol10.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol10.get_element() << ": " << arbol10.size() << "\n\n";
 
     return 0;
 }
