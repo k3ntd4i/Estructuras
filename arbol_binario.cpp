@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 
 template<typename T>
 class ArbolBinario
