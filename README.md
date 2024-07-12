@@ -1,5 +1,7 @@
 # Notas
 
+Ignorar lo que esta dentro del `int main()`, allí se encuentran las pruebas que se le hacen a las implementaciones mientras se construyen. Una vez terminadas se procede a dejar en limpio la función `main()`.
+
 ## Estructuras lineales
 
 En `lista_simplemente_enlazada_arreglo_dinamico.cpp` está la implementación de `Lista`, y de ahí sale la implementación de `Pila` (_stack_), `Cola` (_queue_) y `ColaDoble` (_deque_)
