@@ -218,7 +218,24 @@ private:
         do
         {
             nodo_padre->cantidad_nodos += diferencia_nodos;
-            nodo_padre->altura += diferencia_altura;
+
+            if (nodo_padre->hijo_izquierdo != nullptr)
+            {
+                altura_izquierda = nodo_padre->hijo_izquierdo->altura;
+            }
+
+            if (nodo_padre->hijo_derecho != nullptr)
+            {
+                altura_derecha = nodo_padre->hijo_derecho->altura;
+            }
+
+            altura_maxima = std::max(altura_izquierda, altura_derecha);
+
+            if ((altura_maxima + 1) != nodo_padre->altura)
+            {
+                nodo_padre->altura += diferencia_altura;
+            }
+
             nodo_padre = nodo_padre->raiz;
         } while (nodo_padre != nullptr);
     }
@@ -367,6 +384,13 @@ int main()
     std::cout << "[+] Altura " << arbol11.get_element() << ": " << arbol11.height() << '\n';
     std::cout << "[+] Cantidad nodos " << arbol11.get_element() << ": " << arbol11.size() << "\n\n";
 
+    std::cout << "- Modificando lado izquierdo de A ---------------------- \n\n";
+
+    ArbolBinario<char> arbol12{'L'};
+    arbol4.set_left_child(&arbol12);
+
+    std::cout << "[+] Altura " << arbol1.get_element() << ": " << arbol1.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol1.get_element() << ": " << arbol1.size() << "\n\n";
 
     std::cout << "- Test make_tree ---------------------- \n\n";
 
