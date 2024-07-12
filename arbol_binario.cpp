@@ -79,6 +79,10 @@ public:
         {
             set_child(sub_arbol_izquierdo, true);
         }
+        else
+        {
+            remove_subtree(true);
+        }
 
         this->hijo_izquierdo = sub_arbol_izquierdo;
     }
@@ -88,6 +92,10 @@ public:
         if (sub_arbol_derecho != nullptr)
         {
             set_child(sub_arbol_derecho, false);
+        }
+        else
+        {
+            remove_subtree(false);
         }
 
         this->hijo_derecho = sub_arbol_derecho;
@@ -136,12 +144,12 @@ public:
 
     ArbolBinario<T> remove_left_subtree()
     {
-        // por hacer
+        remove_subtree(true);
     }
 
     ArbolBinario<T> remove_right_subtree()
     {
-        // por hacer
+        remove_subtree(false);
     }
 
     void pre_order()
@@ -240,6 +248,43 @@ private:
         } while (nodo_padre != nullptr);
     }
 
+    void remove_subtree(bool izquierdo)
+    {
+        std::cout << "ENTRO A REMOVE SUBTREE ";
+        int cantidad_nodos_anterior{ this->cantidad_nodos };
+        int altura_anterior{ this->altura };
+
+        ArbolBinario<T> *this_hijo{};
+        ArbolBinario<T> *hermano_this_hijo{};
+
+        if (izquierdo)
+        { 
+            this_hijo = this->hijo_izquierdo;
+            hermano_this_hijo = this->hijo_derecho;
+        }
+        else
+        {
+            this_hijo = this->hijo_derecho;
+            hermano_this_hijo = this->hijo_izquierdo;
+        }
+
+        if (this_hijo != nullptr)
+        {
+            this->cantidad_nodos -= this_hijo->cantidad_nodos;
+            this_hijo->raiz = nullptr;
+        }
+
+        if (hermano_this_hijo != nullptr)
+        {
+            this->altura = hermano_this_hijo->altura + 1;
+        }
+
+        if (this->raiz != nullptr)
+        {
+            actualizar_datos_padre(cantidad_nodos_anterior, altura_anterior);
+        }
+    }
+
     void set_child(ArbolBinario<T> *sub_arbol, bool izquierdo)
     {
         ArbolBinario<T> *this_hijo{};
@@ -262,6 +307,7 @@ private:
         if (this_hijo != nullptr)
         {
             this->cantidad_nodos -= this_hijo->cantidad_nodos;
+            this_hijo->raiz = nullptr;
         }
 
         this->cantidad_nodos += sub_arbol->cantidad_nodos;
@@ -387,22 +433,36 @@ int main()
     std::cout << "- Modificando lado izquierdo de A ---------------------- \n\n";
 
     ArbolBinario<char> arbol12{'L'};
+    ArbolBinario<char> arbol13{'M'};
+    ArbolBinario<char> arbol14{'N'};
+    ArbolBinario<char> arbol15{'O'};
+    ArbolBinario<char> arbol16{'P'};
+    ArbolBinario<char> arbol17{'Q'};
     arbol4.set_left_child(&arbol12);
+    arbol12.set_right_child(&arbol13);
+    arbol13.set_right_child(&arbol14);
+    arbol14.set_right_child(&arbol15);
+    arbol15.set_right_child(&arbol16);
 
     std::cout << "[+] Altura " << arbol1.get_element() << ": " << arbol1.height() << '\n';
     std::cout << "[+] Cantidad nodos " << arbol1.get_element() << ": " << arbol1.size() << "\n\n";
 
-    std::cout << "- Test make_tree ---------------------- \n\n";
+    arbol16.set_right_child(&arbol17);
 
-    std::cout << "[+] Altura antes " << arbol7.get_element() << ": " << arbol7.height() << '\n';
-    std::cout << "[+] Cantidad nodos antes " << arbol7.get_element() << ": " << arbol7.size() << '\n';
-    std::cout << "[+] Nodo padre de G: " << arbol7.get_parent()->get_element() << "\n\n";
-    arbol7.make_tree('X', nullptr, nullptr);
-    std::cout << "[+] Altura despues " << arbol7.get_element() << ": " << arbol7.height() << '\n';
-    std::cout << "[+] Cantidad nodos despues " << arbol7.get_element() << ": " << arbol7.size() << '\n';
-    std::cout << "[+] Nodo padre de X: " << arbol7.get_parent()->get_element() << "\n\n";
+    std::cout << "[+] Altura " << arbol1.get_element() << ": " << arbol1.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol1.get_element() << ": " << arbol1.size() << "\n\n";
 
-    std::cout << "- Arbol make tree ---------------------- \n\n";
+    // std::cout << "- Test make_tree ---------------------- \n\n";
+
+    // std::cout << "[+] Altura antes " << arbol7.get_element() << ": " << arbol7.height() << '\n';
+    // std::cout << "[+] Cantidad nodos antes " << arbol7.get_element() << ": " << arbol7.size() << '\n';
+    // std::cout << "[+] Nodo padre de G: " << arbol7.get_parent()->get_element() << "\n\n";
+    // arbol7.make_tree('X', nullptr, nullptr);
+    // std::cout << "[+] Altura despues " << arbol7.get_element() << ": " << arbol7.height() << '\n';
+    // std::cout << "[+] Cantidad nodos despues " << arbol7.get_element() << ": " << arbol7.size() << '\n';
+    // std::cout << "[+] Nodo padre de X: " << arbol7.get_parent()->get_element() << "\n\n";
+
+    std::cout << "- Arbol cambiado ---------------------- \n\n";
 
     std::cout << "[+] Altura " << arbol1.get_element() << ": " << arbol1.height() << '\n';
     std::cout << "[+] Cantidad nodos " << arbol1.get_element() << ": " << arbol1.size() << "\n\n";
@@ -430,6 +490,44 @@ int main()
 
     std::cout << "[+] Altura " << arbol11.get_element() << ": " << arbol11.height() << '\n';
     std::cout << "[+] Cantidad nodos " << arbol11.get_element() << ": " << arbol11.size() << "\n\n";
+
+    std::cout << "- Creando un grafo falso ---------------------- \n\n";
+
+    arbol12.set_left_child(&arbol11);
+
+    std::cout << "[+] Altura " << arbol12.get_element() << ": " << arbol12.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol12.get_element() << ": " << arbol12.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol1.get_element() << ": " << arbol1.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol1.get_element() << ": " << arbol1.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol2.get_element() << ": " << arbol2.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol2.get_element() << ": " << arbol2.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol3.get_element() << ": " << arbol3.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol3.get_element() << ": " << arbol3.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol6.get_element() << ": " << arbol6.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol6.get_element() << ": " << arbol6.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol7.get_element() << ": " << arbol7.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol7.get_element() << ": " << arbol7.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol8.get_element() << ": " << arbol8.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol8.get_element() << ": " << arbol8.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol9.get_element() << ": " << arbol9.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol9.get_element() << ": " << arbol9.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol10.get_element() << ": " << arbol10.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol10.get_element() << ": " << arbol10.size() << "\n\n";
+
+    std::cout << "[+] Altura " << arbol11.get_element() << ": " << arbol11.height() << '\n';
+    std::cout << "[+] Cantidad nodos " << arbol11.get_element() << ": " << arbol11.size() << "\n\n";
+
+    std::cout << "[+] Hijo derecho " << arbol8.get_element() << ": " << arbol8.get_right_child()->get_element() << '\n';
+    std::cout << "[+] Hijo izquerdo " << arbol8.get_element() << ": " << arbol8.get_left_child()->get_element() << '\n';
+    std::cout << "[+] Padre " << arbol11.get_element() << ": " << arbol11.get_parent()->get_element() << "\n\n";
 
     return 0;
 }
