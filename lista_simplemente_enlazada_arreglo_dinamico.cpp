@@ -108,10 +108,10 @@ public:
 
         if (this->longitud > 0)
         {
-            std::cout << arreglo[0];
-            for (int i = 1; i < longitud; i++)
+            std::cout << this->arreglo[0];
+            for (int i{1}; i < this->longitud; i++)
             {
-                std::cout << ", " << arreglo[i];
+                std::cout << ", " << this->arreglo[i];
             }
         }
 
