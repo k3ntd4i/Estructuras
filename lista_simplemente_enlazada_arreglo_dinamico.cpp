@@ -106,12 +106,12 @@ public:
     {
         std::cout << "[";
 
-        for (int i{0}; i < this->longitud; i++)
+        if (this->longitud > 0)
         {
-            std::cout << this->arreglo[i];
-            if (i != this->longitud - 1)
+            std::cout << arreglo[0];
+            for (int i = 1; i < longitud; i++)
             {
-                std::cout << ", ";
+                std::cout << ", " << arreglo[i];
             }
         }
 
