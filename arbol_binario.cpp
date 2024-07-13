@@ -155,24 +155,77 @@ public:
         return arbol_retorno;
     }
 
+private:
+    int n_nodos{};
+    int iterador{};
+
+public:
     void pre_order()
     {
-        // por hacer
+        std::cout << "[";
+
+        this->n_nodos = this->cantidad_nodos;
+        this->iterador = 0;
+        pre_order_recursivo(this);
+
+        std::cout << "]";
     }
     
     void in_order()
     {
-        // por hacer
+        std::cout << "[";
+
+        this->n_nodos = this->cantidad_nodos;
+        this->iterador = 0;
+        in_order_recursivo(this);
+
+        std::cout << "]";
     }
 
     void post_order()
     {
-        // por hacer
+        std::cout << "[";
+
+        this->n_nodos = this->cantidad_nodos;
+        this->iterador = 0;
+        post_order_recursivo(this);
+
+        std::cout << "]";
     }
 
     void level_order()
     {
-        // por hacer
+        std::cout << "[";
+
+        ArbolBinario<T> *lista_nodos[this->cantidad_nodos] {};
+        lista_nodos[0] = this;
+
+        this->iterador = 0;
+        int indice_inserción{ 1 };
+        for (int i{0}; i < this->cantidad_nodos; i++)
+        {
+            if (lista_nodos[i]->hijo_izquierdo != nullptr)
+            {
+                lista_nodos[indice_inserción] = lista_nodos[i]->hijo_izquierdo;
+                indice_inserción++;
+            }
+
+            if (lista_nodos[i]->hijo_derecho != nullptr)
+            {
+                lista_nodos[indice_inserción] = lista_nodos[i]->hijo_derecho;
+                indice_inserción++;
+            }
+
+            std::cout << lista_nodos[i]->elemento;
+            this->iterador ++;
+
+            if (this->iterador < this->cantidad_nodos)
+            {
+                std::cout << ", ";
+            }
+        }
+
+        std::cout << "]";
     }
 
 private:
@@ -351,24 +404,56 @@ private:
         }
     }
 
-    ArbolBinario<T> pre_order_recursivo(ArbolBinario<T> *arbol)
+    void pre_order_recursivo(ArbolBinario<T> *arbol)
     {
-        // por hacer
+        if (arbol != nullptr)
+        {
+            std::cout << arbol->elemento;
+            this->iterador ++;
+
+            if (iterador < this->n_nodos)
+            {
+                std::cout << ", ";
+            }
+
+            pre_order_recursivo(arbol->hijo_izquierdo);
+            pre_order_recursivo(arbol->hijo_derecho);
+        }
     }
     
-    ArbolBinario<T> in_order_recursivo(ArbolBinario<T> *arbol)
+    void in_order_recursivo(ArbolBinario<T> *arbol)
     {
-        // por hacer
+        if (arbol != nullptr)
+        {
+            in_order_recursivo(arbol->hijo_izquierdo);
+
+            std::cout << arbol->elemento;
+            this->iterador ++;
+
+            if (iterador < this->n_nodos)
+            {
+                std::cout << ", ";
+            }
+
+            in_order_recursivo(arbol->hijo_derecho);
+        }
     }
 
-    ArbolBinario<T> post_order_recursivo(ArbolBinario<T> *arbol)
+    void post_order_recursivo(ArbolBinario<T> *arbol)
     {
-        // por hacer
-    }
+        if (arbol != nullptr)
+        {
+            post_order_recursivo(arbol->hijo_izquierdo);
+            post_order_recursivo(arbol->hijo_derecho);
 
-    ArbolBinario<T> level_order_recursivo(ArbolBinario<T> *arbol)
-    {
-        // por hacer
+            std::cout << arbol->elemento;
+            this->iterador ++;
+
+            if (iterador < this->n_nodos)
+            {
+                std::cout << ", ";
+            }
+        }
     }
 };
 
@@ -387,6 +472,9 @@ int main()
     ArbolBinario<char> arbol3{'C'};
     std::cout << "[+] Altura " << arbol3.get_element() << ": " << arbol3.height() << '\n';
     std::cout << "[+] Cantidad nodos " << arbol3.get_element() << ": " << arbol3.size() << "\n\n";
+
+    std::cout << "1) Level-order: ";
+    arbol1.level_order(); std::cout << "\n\n";
 
     ArbolBinario<char> arbol4{'D'};
     ArbolBinario<char> arbol5{'E'};
@@ -513,6 +601,9 @@ int main()
     std::cout << "[+] Altura " << arbol11.get_element() << ": " << arbol11.height() << '\n';
     std::cout << "[+] Cantidad nodos " << arbol11.get_element() << ": " << arbol11.size() << "\n\n";
 
+    std::cout << "1) Level-order: ";
+    arbol1.level_order(); std::cout << "\n\n";
+
     std::cout << "- Creando un grafo falso ---------------------- \n\n";
 
     arbol12.set_left_child(&arbol11);
@@ -555,6 +646,9 @@ int main()
     std::cout << "[+] Hijo izquerdo " << arbol12.get_element() << ": " << arbol12.get_left_child()->get_element() << '\n';
     std::cout << "[+] Padre " << arbol11.get_element() << ": " << arbol11.get_parent()->get_element() << "\n\n";
 
+    std::cout << "1) Level-order: ";
+    arbol1.level_order(); std::cout << "\n\n";
+
     std::cout << "- Volviendo al arbol original ---------------------- \n\n";
 
     ArbolBinario<char> *retorno1{ arbol4.remove_left_subtree() };
@@ -584,6 +678,42 @@ int main()
     std::cout << "[+] Hijo derecho " << arbol6.get_element() << ": " << arbol6.get_right_child() << '\n';
     std::cout << "[+] Hijo izquerdo " << arbol6.get_element() << ": " << arbol6.get_left_child() << '\n';
     std::cout << "[+] Cantidad nodos " << arbol6.get_element() << ": " << arbol6.size() << "\n\n";
+
+    std::cout << "1) Pre-order: ";
+    arbol1.pre_order(); std::cout << '\n';
+
+    std::cout << "2) In-order: ";
+    arbol1.in_order(); std::cout << '\n';
+
+    std::cout << "3) Post-order: ";
+    arbol1.post_order(); std::cout << '\n';
+
+    std::cout << "4) Level-order: ";
+    arbol1.level_order(); std::cout << '\n';
+
+    std::cout << "\n- Ejemplos guia 2 ---------------------- \n\n";
+
+    arbol8.remove_left_subtree();
+    
+    arbol5.set_left_child(&arbol8);
+
+    arbol9.remove_left_subtree();
+
+    arbol6.set_right_child(&arbol9);
+
+    arbol3.set_right_child(&arbol7);
+
+    std::cout << "1) Pre-order: ";
+    arbol1.pre_order(); std::cout << '\n';
+
+    std::cout << "2) In-order: ";
+    arbol1.in_order(); std::cout << '\n';
+
+    std::cout << "3) Post-order: ";
+    arbol1.post_order(); std::cout << '\n';
+
+    std::cout << "4) Level-order: ";
+    arbol1.level_order(); std::cout << '\n';
 
     return 0;
 }
