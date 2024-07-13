@@ -8,8 +8,8 @@ class ArbolBinario
     ArbolBinario<T> *hijo_izquierdo{ nullptr };
     ArbolBinario<T> *hijo_derecho{ nullptr };
 
-    int cantidad_nodos{ 0 };
-    int altura{ 0 };
+    int cantidad_nodos{ 1 };
+    int altura{ 1 };
 
     ArbolBinario<T> *raiz{ nullptr };
 
@@ -30,17 +30,16 @@ public:
         : elemento{ elemento_inicial }
         , hijo_izquierdo{ sub_arbol_izquierdo }
         , hijo_derecho{ sub_arbol_derecho }
+        , cantidad_nodos{ 1 }
+        , altura{ 1 }
         , raiz{ nullptr }
     {
-        this->cantidad_nodos = 1;
-        this->altura = 1;
-
         actualizar_datos(sub_arbol_izquierdo, sub_arbol_derecho);
     };
 
-    bool is_empty()
+    bool is_leaf()
     {
-        return (cantidad_nodos == 0) ? true : false;
+        return (cantidad_nodos == 1) ? true : false;
     }
 
     int size()
