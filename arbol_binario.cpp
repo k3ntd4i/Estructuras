@@ -425,7 +425,7 @@ private:
             std::cout << arbol->elemento;
             this->iterador ++;
 
-            if (iterador < this->n_nodos)
+            if (this->iterador < this->n_nodos)
             {
                 std::cout << ", ";
             }
@@ -444,7 +444,7 @@ private:
             std::cout << arbol->elemento;
             this->iterador ++;
 
-            if (iterador < this->n_nodos)
+            if (this->iterador < this->n_nodos)
             {
                 std::cout << ", ";
             }
@@ -463,7 +463,7 @@ private:
             std::cout << arbol->elemento;
             this->iterador ++;
 
-            if (iterador < this->n_nodos)
+            if (this->iterador < this->n_nodos)
             {
                 std::cout << ", ";
             }
