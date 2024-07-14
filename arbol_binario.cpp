@@ -39,7 +39,7 @@ public:
 
     bool is_leaf()
     {
-        return (cantidad_nodos == 1) ? true : false;
+        return (this->cantidad_nodos == 1) ? true : false;
     }
 
     int size()
