@@ -268,30 +268,15 @@ private:
 
     void actualizar_datos_padre(int cantidad_nodos_anterior, int altura_anterior)
     {
-        ArbolBinario<T> *nodo_padre{ this->raiz };
-        int diferencia_nodos{ this->cantidad_nodos - cantidad_nodos_anterior };
-
         int altura_derecha{ 0 };
         int altura_izquierda{ 0 };
-
-        if (nodo_padre->hijo_izquierdo != nullptr)
-        {
-            altura_izquierda = nodo_padre->hijo_izquierdo->altura;
-        }
-
-        if (nodo_padre->hijo_derecho != nullptr)
-        {
-            altura_derecha = nodo_padre->hijo_derecho->altura;
-        }
-
-        int altura_maxima{ std::max(altura_izquierda, altura_derecha) };
-
         int diferencia_altura{ 0 };
+        int altura_maxima{ 0 };
 
-        if ((altura_maxima + 1) != nodo_padre->altura)
-        {
-            diferencia_altura = altura_maxima - altura_anterior;
-        }
+        ArbolBinario<T> *nodo_padre{ this->raiz };
+
+        int diferencia_nodos{ this->cantidad_nodos - cantidad_nodos_anterior };
+        bool calculado{ false };
 
         do
         {
@@ -311,6 +296,12 @@ private:
 
             if ((altura_maxima + 1) != nodo_padre->altura)
             {
+                if (!calculado)
+                {
+                    diferencia_altura = altura_maxima - altura_anterior;
+                    calculado = true;
+                }
+
                 nodo_padre->altura += diferencia_altura;
             }
 
