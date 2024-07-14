@@ -10,7 +10,7 @@ En `lista_simplemente_enlazada_arreglo_dinamico.cpp` está la implementación de
 
 En el método `level_order` de la clase `ArbolBinario` se utiliza un array estilo `C` en vez de un `std::array` debido a que, incluir un `std::array` implicaría usar una estructura de datos de la librería estándar y no una implementación propia.
 
-Los argumentos que implican otros arboles en los métodos de `ArbolBinario` se deben pasar por referencia `arbol.metodo(&otro_arbol);`, debido a que espera una dirección de memoria (los parámetros son punteros y no tendría sentido trabajar con copias de los arboles. Se debe acceder a los arboles originales).
+En los métodos de la clase `ArbolBinario`, los argumentos que implican otros árboles deben pasarse por referencia (Ej: `arbol.metodo(&otro_arbol);`). Esto se debe a que los parámetros son punteros y esperan una dirección de memoria. No tendría sentido trabajar con copias de los árboles, por lo tanto, se debe acceder a los árboles originales
 
 ## Definiciones
 

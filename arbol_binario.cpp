@@ -47,12 +47,14 @@ public:
         return this->cantidad_nodos;
     }
 
-    int height() // profundidad maxima: cantidad de niveles total (contando desde 1)
+    // Profundidad maxima: cantidad total de niveles (contando desde 1)
+    int height()
     {
         return this->altura;
     }
 
-    int depth() // el nivel del nodo respecto a la raiz (contando desde 1)
+    // El nivel del nodo respecto a la raiz del arbol al que pertenece (contando desde 1)
+    int depth()
     {
         int profundidad{ 1 };
         ArbolBinario<T> *nodo_padre{ this->raiz };
@@ -117,7 +119,7 @@ public:
         this->elemento = dato;
     }
 
-    // este metodo reemplaza el arbol existente en la instancia por uno nuevo
+    // Reemplazar el arbol existente en la instancia por uno nuevo
     void make_tree
     (
         const T &elemento_inicial,
@@ -211,26 +213,26 @@ public:
     {
         std::cout << "[";
 
-        ArbolBinario<T> *lista_nodos[this->cantidad_nodos] {};
-        lista_nodos[0] = this;
+        ArbolBinario<T> *array_nodos[this->cantidad_nodos] {};
+        array_nodos[0] = this;
 
         this->iterador = 0;
         int indice_inserción{ 1 };
         for (int i{0}; i < this->cantidad_nodos; i++)
         {
-            if (lista_nodos[i]->hijo_izquierdo != nullptr)
+            if (array_nodos[i]->hijo_izquierdo != nullptr)
             {
-                lista_nodos[indice_inserción] = lista_nodos[i]->hijo_izquierdo;
+                array_nodos[indice_inserción] = array_nodos[i]->hijo_izquierdo;
                 indice_inserción++;
             }
 
-            if (lista_nodos[i]->hijo_derecho != nullptr)
+            if (array_nodos[i]->hijo_derecho != nullptr)
             {
-                lista_nodos[indice_inserción] = lista_nodos[i]->hijo_derecho;
+                array_nodos[indice_inserción] = array_nodos[i]->hijo_derecho;
                 indice_inserción++;
             }
 
-            std::cout << lista_nodos[i]->elemento;
+            std::cout << array_nodos[i]->elemento;
             this->iterador ++;
 
             if (this->iterador < this->cantidad_nodos)

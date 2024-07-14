@@ -29,12 +29,14 @@ public:
         return (this->longitud == 0);
     }
 
-    int size() // cuantos elementos hay
+    // Numero de elementos total
+    int size()
     {
         return this->longitud;
     }
 
-    int length() // indice maximo
+    // Indice maximo
+    int length()
     {
         return (this->longitud - 1);
     }
