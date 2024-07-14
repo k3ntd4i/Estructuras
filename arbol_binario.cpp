@@ -47,9 +47,23 @@ public:
         return this->cantidad_nodos;
     }
 
-    int height() // profundidad: cantidad de niveles (contando desde 1)
+    int height() // profundidad maxima: cantidad de niveles total (contando desde 1)
     {
         return this->altura;
+    }
+
+    int depth() // el nivel del nodo respecto a la raiz (contando desde 1)
+    {
+        int profundidad{ 1 };
+        ArbolBinario<T> *nodo_padre{ this->raiz };
+
+        while (nodo_padre != nullptr)
+        {
+            profundidad++;
+            nodo_padre = nodo_padre->raiz;
+        }
+
+        return profundidad;
     }
 
     ArbolBinario<T> *get_parent()
@@ -475,6 +489,7 @@ int main()
 
     std::cout << "1) Level-order: ";
     arbol1.level_order(); std::cout << "\n\n";
+    std::cout << "[+] Nivel relativo: " << arbol1.depth() << "\n\n";
 
     ArbolBinario<char> arbol4{'D'};
     ArbolBinario<char> arbol5{'E'};
@@ -485,6 +500,9 @@ int main()
     ArbolBinario<char> arbol10{'J'};
 
     arbol1.set_left_child(&arbol2);
+
+    std::cout << "[+] Padre " << arbol2.get_element() << ": " << arbol2.get_parent()->get_element() << '\n';
+    std::cout << "[+] Nivel relativo: " << arbol2.depth() << "\n\n";
 
     arbol2.set_left_child(&arbol4);
     arbol2.set_right_child(&arbol5);
@@ -604,6 +622,9 @@ int main()
     std::cout << "1) Level-order: ";
     arbol1.level_order(); std::cout << "\n\n";
 
+    std::cout << "[+] Padre " << arbol5.get_element() << ": " << arbol5.get_parent()->get_element() << '\n';
+    std::cout << "[+] Nivel relativo: " << arbol5.depth() << "\n\n";
+
     std::cout << "- Creando un grafo falso ---------------------- \n\n";
 
     arbol12.set_left_child(&arbol11);
@@ -648,6 +669,8 @@ int main()
 
     std::cout << "1) Level-order: ";
     arbol1.level_order(); std::cout << "\n\n";
+
+    std::cout << "[+] Nivel relativo " << arbol17.get_element() << ": " << arbol17.depth() << "\n\n";
 
     std::cout << "- Volviendo al arbol original ---------------------- \n\n";
 
