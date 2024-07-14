@@ -36,8 +36,8 @@ También es posible que se haga una implementación generalizada de un n-árbol 
   - [x] Cola Doble
   - [ ] Arreglo dinámico
 - [x] Árbol Binario
-  - [ ] AVL
   - [ ] BST
+  - [ ] AVL
   - [ ] Red-Black
   - [ ] Heap
 - [ ] n-Árbol
