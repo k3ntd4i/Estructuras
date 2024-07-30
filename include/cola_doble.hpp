@@ -5,7 +5,7 @@
 template<typename T>
 class ColaDoble
 {
-    Lista<T> lista;
+    Lista<T> lista{};
 
 public:
     int size()
