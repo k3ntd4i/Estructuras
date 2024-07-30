@@ -1,4 +1,7 @@
-#include "include/estructuras_lineales.hpp"
+#include "include/lista.hpp"
+#include "include/pila.hpp"
+#include "include/cola.hpp"
+#include "include/cola_doble.hpp"
 #include <iostream>
 
 int main()

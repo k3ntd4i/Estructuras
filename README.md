@@ -14,7 +14,7 @@ Ignorar lo que esta dentro de las funciones principales `int main()`, allí se e
 
 En el directorio `include` se encuentran las implementaciones de las estructuras con la extension `.hpp`, es decir, a modo encabezado (`#include <encabezado>`). En este caso, al ser un encabezado propio, para poder incluir los archivos se deben usar comillas dobles y escribir la ruta relativa (la ubicación del archivo `.hpp` respecto al archivo `.cpp` en el que se está incluyendo): Ej: `#include "include/encabezado.hpp"`.
 
-- En el archivo `estructuras_lineales.hpp` está la implementación de `Lista`, y de ahí sale la implementación de `Pila` (_stack_), `Cola` (_queue_) y `ColaDoble` (_deque_).
+- De la implementación de `Lista` (_list_), sale la implementación de `Pila` (_stack_), `Cola` (_queue_) y `ColaDoble` (_deque_).
 
 - En el archivo `arbol_binario.hpp` está la implementación general/base de árbol binario.
 
