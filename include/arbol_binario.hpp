@@ -21,7 +21,7 @@ public:
     ArbolBinario(const T &elemento_inicial)
         : ArbolBinario{ elemento_inicial, nullptr, nullptr }
     {
-    };
+    }
 
     ArbolBinario
     (
@@ -37,7 +37,7 @@ public:
         , raiz{ nullptr }
     {
         actualizar_datos(sub_arbol_izquierdo, sub_arbol_derecho);
-    };
+    }
 
     bool is_leaf()
     {
