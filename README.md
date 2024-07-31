@@ -40,6 +40,10 @@ _Dada una raíz, se tiene que:_
 - _Las claves almacenadas en el subárbol derecho de la raíz son mayores que la clave de la raíz._
 - _Todos los subárboles cumplen estas propiedades._
 
+Un árbol de Búsqueda Binaria puede estar vació (sin nodos), puesto que, para ser considerado _no vació_, el usuario debe insertar un elemento explícitamente
+
+La altura del árbol se cuenta desde $`1`$, pero será $`0`$ si el árbol está vació.
+
 ## Tareas
 
 ### Características
