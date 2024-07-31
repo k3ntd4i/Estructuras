@@ -6,9 +6,9 @@ Ignorar lo que esta dentro de las funciones principales `int main()`, allí se e
 
 ### `ArbolBinario`
 
-  En el método `level_order` de la clase `ArbolBinario` se utiliza un array estilo `C` en vez de un `std::array` debido a que, incluir un `std::array` implicaría usar una estructura de datos de la librería estándar y no una implementación propia.
+En el método `level_order` de la clase `ArbolBinario` se utiliza un array estilo `C` en vez de un `std::array` debido a que, incluir un `std::array` implicaría usar una estructura de datos de la librería estándar y no una implementación propia.
 
-  En los métodos de la clase `ArbolBinario`, los argumentos que implican otros árboles deben pasarse por referencia. Ej: `arbol.metodo(&otro_arbol);`. Esto se debe a que los parámetros son punteros y esperan una dirección de memoria. No tendría sentido trabajar con copias de los árboles, por lo tanto, se debe acceder a los árboles originales.
+En los métodos de la clase `ArbolBinario`, los argumentos que implican otros árboles deben pasarse por referencia. Ej: `arbol.metodo(&otro_arbol);`. Esto se debe a que los parámetros son punteros y esperan una dirección de memoria. No tendría sentido trabajar con copias de los árboles, por lo tanto, se debe acceder a los árboles originales.
 
 ## Repositorio
 
@@ -29,6 +29,16 @@ En esta estructura se define el concepto de _nodo_ como un espacio de memoria as
 Se hará la implementación de Árbol de Búsqueda Binaria o _BST_ por sus siglas en inglés (tomando como base el `ArbolBinario`) en el que según los valores que se inserten, estos estarán en determinado orden. Para dicho árbol, probablemente se hagan algoritmos que organicen los nodos y demás.
 
 También es posible que se haga una implementación generalizada de un n-árbol (cualquier cantidad de hijos) para poder hacer cosas jerarquizadas.
+
+### Árbol de Búsqueda Binaria
+
+Esta estructura gestiona por si misma instancias de la clase `ArbolBinario`, teniendo en cuenta las siguientes reglas:
+
+_Dada una raíz, se tiene que:_
+
+- _Las claves almacenadas en el subárbol izquierdo de la raíz son menores que la clave de la raíz._
+- _Las claves almacenadas en el subárbol derecho de la raíz son mayores que la clave de la raíz._
+- _Todos los subárboles cumplen estas propiedades._
 
 ## Tareas
 
