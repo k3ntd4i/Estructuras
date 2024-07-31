@@ -8,6 +8,8 @@ class Cola
     Lista<T> lista{};
 
 public:
+    Cola() = default;
+
     int size()
     {
         return lista.size();

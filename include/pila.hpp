@@ -8,6 +8,8 @@ class Pila
     Lista<T> lista{};
 
 public:
+    Pila() = default;
+
     int size()
     {
         return lista.size();

@@ -6,8 +6,11 @@ template<typename T>
 class ArbolBusquedaBinaria
 {
     ArbolBinario<T> arbol{};
+    int cantidad_nodos{ 0 };
 
 public:
+    ArbolBusquedaBinaria() = default;
+
     bool is_empty()
     {
         // por hacer

@@ -8,6 +8,8 @@ class ColaDoble
     Lista<T> lista{};
 
 public:
+    ColaDoble() = default;
+
     int size()
     {
         return lista.size();
