@@ -4,6 +4,10 @@ Ignorar lo que esta dentro de las funciones principales `int main()`, allí se e
 
 ## Detalles de implementación
 
+### `Pila`, `Cola` y `ColaDoble`
+
+En las implementaciones de `Pila`, `Cola` y `ColaDoble` no se utiliza `this->` para acceder a la instancia base de `Lista` debido a la sencillas del código y la casi inexistencia de otras variables diferentes de _"lista"_. En otras palabras, el uso de `this->` es redundante en este caso, ya que su principal propósito es distinguir entre variables locales y variables de instancia.
+
 ### `ArbolBinario`
 
 En el método `level_order` de la clase `ArbolBinario` se utiliza un array estilo `C` en vez de un `std::array` debido a que, incluir un `std::array` implicaría usar una estructura de datos de la librería estándar y no una implementación propia.
