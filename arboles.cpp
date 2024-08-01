@@ -1,5 +1,5 @@
 #include "include/arbol_binario.hpp"
-#include "include/arbol_bs.hpp"
+#include "include/arbol_busqueda_binaria.hpp"
 #include <iostream>
 
 int main()
@@ -26,6 +26,15 @@ int main()
 
     std::cout << "\nSize: " << bst_2.size() << std::boolalpha << ", vacio: " << bst_2.is_empty();
     std::cout << "\nAltura: " << bst_2.height() << '\n';
+
+    bst_2.insert(10);
+    bst_2.insert(15);
+    bst_2.insert(9);
+    bst_2.insert(8);
+    bst_2.insert(3);
+    bst_2.insert(12);
+
+    bst_2.pre_order();
 
     return 0;
 }
