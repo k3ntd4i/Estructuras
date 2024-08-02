@@ -6,7 +6,7 @@ Ignorar lo que esta dentro de las funciones principales `int main()`, allí se e
 
 ### `Pila`, `Cola` y `ColaDoble`
 
-En las implementaciones de `Pila`, `Cola` y `ColaDoble` no se utiliza `this->` para acceder a la instancia base de `Lista` debido a la sencillas del código y la casi inexistencia de otras variables diferentes de _"lista"_. En otras palabras, el uso de `this->` es redundante en este caso, ya que su principal propósito es distinguir entre variables locales y variables de instancia.
+En las implementaciones de `Pila`, `Cola` y `ColaDoble` no se utiliza `this->` para acceder a la instancia base de `Lista` debido a la sencillez del código y la casi inexistencia de otras variables diferentes de _"lista"_. En otras palabras, el uso de `this->` es redundante en este caso, ya que su principal propósito es distinguir entre variables locales y variables de instancia.
 
 ### `ArbolBinario`
 
@@ -19,20 +19,15 @@ En los métodos de la clase `ArbolBinario`, los argumentos que implican otros á
 En el directorio `include` se encuentran las implementaciones de las estructuras con la extension `.hpp`, es decir, a modo encabezado (`#include <encabezado>`). En este caso, al ser un encabezado propio, para poder incluir los archivos se deben usar comillas dobles y escribir la ruta relativa (la ubicación del archivo `.hpp` respecto al archivo `.cpp` en el que se está incluyendo): Ej: `#include "include/encabezado.hpp"`.
 
 - De la implementación de `Lista` (_list_), sale la implementación de `Pila` (_stack_), `Cola` (_queue_) y `ColaDoble` (_deque_).
-
-- En el archivo `arbol_binario.hpp` está la implementación general/base de árbol binario.
+- De la implementación de `ArbolBinario`, sale la implementación de `ArbolBusquedaBinaria` (_BST_).
 
 ## Definiciones
 
 ### Árbol
 
-El concepto de "Árbol Binario" se tomara como una estructura que reúne nodos con el rango de $`[0,2]`$ hijos, sin orden ni verificaciones. De este se podrán hacer los arboles en los que si se tienen en cuenta diferentes reglas y ordenes (por ahora solo tener en mente el _BST_).
+El concepto de "Árbol Binario" se tomara como una estructura que reúne nodos con el rango de $`[0,2]`$ hijos, sin orden ni verificaciones. De este salen los otros tipos de arboles en los que si se consideran diferentes reglas, como el Árbol de Búsqueda Binaria (ABB o _BST_), Adelson-Velskii y Landis (AVL), entre otros.
 
 En esta estructura se define el concepto de _nodo_ como un espacio de memoria asignado por el compilador al instanciar un objeto `ArbolBinario`. Este puede contener datos o no, lo que implica poder construir un árbol de nodos vacíos (en todo los nodos está el valor por defecto del tipo de dato `T` definido en la instancia). No puede existir un _árbol vacío_ (sin nodos), ya que para que algo sea considerado un árbol, debe tener por lo menos un nodo. Cuando un árbol tiene un solo nodo, ese único nodo es _hoja_ y _raíz_ al mismo tiempo, es decir, lo que sucede al instanciar por defecto: `ArbolBinario<T> arbol{}`.
-
-Se hará la implementación de Árbol de Búsqueda Binaria o _BST_ por sus siglas en inglés (tomando como base el `ArbolBinario`) en el que según los valores que se inserten, estos estarán en determinado orden. Para dicho árbol, probablemente se hagan algoritmos que organicen los nodos y demás.
-
-También es posible que se haga una implementación generalizada de un n-árbol (cualquier cantidad de hijos) para poder hacer cosas jerarquizadas.
 
 ### Árbol de Búsqueda Binaria
 
