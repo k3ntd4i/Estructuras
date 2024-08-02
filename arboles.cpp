@@ -27,14 +27,35 @@ int main()
     std::cout << "\nSize: " << bst_2.size() << std::boolalpha << ", vacio: " << bst_2.is_empty();
     std::cout << "\nAltura: " << bst_2.height() << '\n';
 
-    bst_2.insert(10);
-    bst_2.insert(15);
-    bst_2.insert(9);
-    bst_2.insert(8);
-    bst_2.insert(3);
-    bst_2.insert(12);
+    std::cout << "\n[+] Digite las entradas del arbol:\n";
 
+    // Input:
+    // 94 141 47 71 100 30 304 24 62 98 776 110 84 33 55 125 5 114 117 49 59 -9999
+
+    int n{ 94 };
+    while (n != -9999)
+    {
+        bst_2.insert(n);
+        std::cin >> n;
+    }
+
+    std::cout << "\n[+] Arbol Pre Order:\n";
     bst_2.pre_order();
+
+    std::cout << "\n\n[+] Arbol In Order:\n";
+    bst_2.in_order();
+
+    std::cout << "\n\n[+] Arbol Post Order:\n";
+    bst_2.post_order();
+
+    std::cout << "\n\n[+] Arbol Level Order:\n";
+    bst_2.level_order();
+
+    std::cout << "\n\nSize: " << bst_2.size() << std::boolalpha << ", vacio: " << bst_2.is_empty();
+    std::cout << "\nAltura: " << bst_2.height() << '\n';
+
+    std::cout << "\nContains 55: " << bst_2.contains(55);
+    std::cout << "\nContains 123: " << bst_2.contains(123) << '\n';
 
     return 0;
 }

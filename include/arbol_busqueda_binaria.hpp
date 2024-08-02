@@ -48,7 +48,7 @@ public:
 
     bool contains(const T &elemento)
     {
-        // por hacer
+        return busqueda(elemento, &this->arbol);
     }
 
     void insert(const T &elemento)
@@ -63,7 +63,7 @@ public:
 
         ArbolBinario<T> *nodo_actual{ &this->arbol };
 
-        while (!nodo_actual->is_leaf())
+        do
         {
             if (elemento < nodo_actual->get_element()
                 && nodo_actual->get_left_child() != nullptr )
@@ -83,7 +83,7 @@ public:
             {
                 break;
             }
-        }
+        } while (!nodo_actual->is_leaf());
 
         ArbolBinario<T> *nuevo_nodo{ new ArbolBinario<T>{ elemento } };
 
@@ -168,6 +168,30 @@ private:
         {
             throw std::out_of_range("El arbol esta vacio.");
         }
+    }
+
+    bool busqueda(const T &elemento, ArbolBinario<T> *arbol)
+    {
+        bool encontrado{};
+
+        if (arbol == nullptr)
+        {
+            encontrado = false;
+        }
+        else if (elemento == arbol->get_element())
+        {
+            encontrado = true;
+        }
+        else if (elemento < arbol->get_element())
+        {
+            encontrado = busqueda(elemento, arbol->get_left_child());
+        }
+        else if (elemento > arbol->get_element())
+        {
+            encontrado = busqueda(elemento, arbol->get_right_child());
+        }
+
+        return encontrado;
     }
 
     void liberar_memoria(ArbolBinario<T> *sub_arbol)
