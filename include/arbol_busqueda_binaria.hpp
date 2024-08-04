@@ -48,7 +48,7 @@ public:
 
     bool contains(const T &elemento)
     {
-        return busqueda(elemento, &this->arbol);
+        return busqueda_booleana(elemento, &this->arbol);
     }
 
     void insert(const T &elemento)
@@ -101,7 +101,84 @@ public:
 
     void remove(const T &elemento)
     {
-        // por hacer
+        verificar_contenido();
+        if (this->cantidad_nodos == 1)
+        {
+            make_empty();
+            return;
+        }
+
+        ArbolBinario<T> *nodo_eliminar{ &this->arbol };
+
+        while (nodo_eliminar->get_element() != elemento)
+        {
+            if (elemento < nodo_eliminar->get_element()
+                && nodo_eliminar->get_left_child() != nullptr )
+            {
+                nodo_eliminar = nodo_eliminar->get_left_child();
+            }
+            else if (elemento > nodo_eliminar->get_element()
+                && nodo_eliminar->get_right_child() != nullptr)
+            {
+                nodo_eliminar = nodo_eliminar->get_right_child();
+            }
+            else
+            {
+                return; // Elemento no encontrado: no hacer nada
+            }
+        }
+
+        ArbolBinario<T> *nodo_padre{ nodo_eliminar->get_parent() };
+        ArbolBinario<T> *padre_hijo_izquierdo{ nodo_padre->get_left_child() };
+        ArbolBinario<T> *padre_hijo_derecho{ nodo_padre->get_right_child() };
+
+        if (nodo_eliminar->is_leaf())
+        {
+            if (padre_hijo_izquierdo == nodo_eliminar)
+            {
+                nodo_padre->remove_left_subtree();
+            }
+            else if (padre_hijo_derecho == nodo_eliminar)
+            {
+                nodo_padre->remove_right_subtree();
+            }
+        }
+        else if (nodo_eliminar->get_left_child() != nullptr
+            && nodo_eliminar->get_right_child() == nullptr)
+        {
+            if (padre_hijo_izquierdo == nodo_eliminar)
+            {
+                nodo_padre->set_left_child(nodo_eliminar->get_left_child());
+            }
+            else if (padre_hijo_derecho == nodo_eliminar)
+            {
+                nodo_padre->set_right_child(nodo_eliminar->get_left_child());
+            }
+        }
+        else if (nodo_eliminar->get_left_child() == nullptr
+            && nodo_eliminar->get_right_child() != nullptr)
+        {
+            if (padre_hijo_izquierdo == nodo_eliminar)
+            {
+                nodo_padre->set_left_child(nodo_eliminar->get_right_child());
+            }
+            else if (padre_hijo_derecho == nodo_eliminar)
+            {
+                nodo_padre->set_right_child(nodo_eliminar->get_right_child());
+            }
+        }
+        else
+        {
+            ArbolBinario<T> *nodo_menor{ find_menor_derecho(&nodo_eliminar) };
+            nodo_eliminar->set_element(nodo_menor->get_element());
+
+            nodo_menor->get_parent()->set_left_child(nullptr);
+
+            nodo_eliminar = nodo_menor;
+        }
+
+        delete nodo_eliminar;
+        this->cantidad_nodos --;
     }
 
     void make_empty()
@@ -170,7 +247,7 @@ private:
         }
     }
 
-    bool busqueda(const T &elemento, ArbolBinario<T> *arbol)
+    bool busqueda_booleana(const T &elemento, ArbolBinario<T> *arbol)
     {
         bool encontrado{};
 
@@ -184,14 +261,25 @@ private:
         }
         else if (elemento < arbol->get_element())
         {
-            encontrado = busqueda(elemento, arbol->get_left_child());
+            encontrado = busqueda_booleana(elemento, arbol->get_left_child());
         }
         else if (elemento > arbol->get_element())
         {
-            encontrado = busqueda(elemento, arbol->get_right_child());
+            encontrado = busqueda_booleana(elemento, arbol->get_right_child());
         }
 
         return encontrado;
+    }
+
+    ArbolBinario<T> *find_menor_derecho(ArbolBinario<T> *sub_arbol)
+    {
+        ArbolBinario<T> *nodo_actual{ sub_arbol->get_right_child() };
+        while (nodo_actual->get_left_child() != nullptr)
+        {
+            nodo_actual = nodo_actual->get_left_child();
+        }
+
+        return nodo_actual;
     }
 
     void liberar_memoria(ArbolBinario<T> *sub_arbol)
