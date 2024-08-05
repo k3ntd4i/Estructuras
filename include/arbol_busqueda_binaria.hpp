@@ -133,6 +133,46 @@ public:
             }
         }
 
+        if (nodo_eliminar == this->arbol)
+        {
+            if (nodo_eliminar->get_left_child() != nullptr
+                && nodo_eliminar->get_right_child() == nullptr)
+            {
+                this->arbol = nodo_eliminar->get_left_child();
+                nodo_eliminar->set_left_child(nullptr);
+            }
+            else if (nodo_eliminar->get_left_child() == nullptr
+                && nodo_eliminar->get_right_child() != nullptr)
+            {
+                this->arbol = nodo_eliminar->get_right_child();
+                nodo_eliminar->set_right_child(nullptr);
+            }
+            else if (nodo_eliminar->get_left_child() != nullptr
+                && nodo_eliminar->get_right_child() != nullptr)
+            {
+                ArbolBinario<T> *nodo_menor{ find_menor_derecho(nodo_eliminar) };
+                nodo_eliminar->set_element(nodo_menor->get_element());
+
+                ArbolBinario<T> *nodo_padre{ nodo_menor->get_parent() };
+
+                if (nodo_padre->get_left_child() == nodo_menor)
+                {
+                    nodo_padre->set_left_child(nullptr);
+                }
+                else if (nodo_padre->get_right_child() == nodo_menor)
+                {
+                    nodo_padre->set_right_child(nullptr);
+                }
+
+                nodo_eliminar = nodo_menor;
+            }
+
+            delete nodo_eliminar;
+            this->cantidad_nodos --;
+
+            return;
+        }
+
         ArbolBinario<T> *nodo_padre{ nodo_eliminar->get_parent() };
         ArbolBinario<T> *padre_hijo_izquierdo{ nodo_padre->get_left_child() };
         ArbolBinario<T> *padre_hijo_derecho{ nodo_padre->get_right_child() };
@@ -141,11 +181,11 @@ public:
         {
             if (padre_hijo_izquierdo == nodo_eliminar)
             {
-                nodo_padre->remove_left_subtree();
+                nodo_padre->set_left_child(nullptr);
             }
             else if (padre_hijo_derecho == nodo_eliminar)
             {
-                nodo_padre->remove_right_subtree();
+                nodo_padre->set_right_child(nullptr);
             }
         }
         else if (nodo_eliminar->get_left_child() != nullptr
@@ -177,7 +217,16 @@ public:
             ArbolBinario<T> *nodo_menor{ find_menor_derecho(nodo_eliminar) };
             nodo_eliminar->set_element(nodo_menor->get_element());
 
-            nodo_menor->get_parent()->set_left_child(nullptr);
+            nodo_padre = nodo_menor->get_parent();
+
+            if (nodo_padre->get_left_child() == nodo_menor)
+            {
+                nodo_padre->set_left_child(nullptr);
+            }
+            else if (nodo_padre->get_right_child() == nodo_menor)
+            {
+                nodo_padre->set_right_child(nullptr);
+            }
 
             nodo_eliminar = nodo_menor;
         }
