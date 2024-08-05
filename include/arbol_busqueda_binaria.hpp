@@ -6,14 +6,14 @@
 template<typename T>
 class ArbolBusquedaBinaria
 {
-    ArbolBinario<T> arbol{};
+    ArbolBinario<T> *arbol{ nullptr };
     int cantidad_nodos{ 0 };
 
 public:
     ArbolBusquedaBinaria() = default;
 
     ArbolBusquedaBinaria(const T &elemento)
-        : arbol{ elemento }, cantidad_nodos{ 1 }
+        : arbol{ new ArbolBinario<T>{ elemento } }, cantidad_nodos{ 1 }
     {
     }
 
@@ -27,7 +27,8 @@ public:
         this->n_nodos = this->cantidad_nodos;
         this->iterador = 0;
 
-        liberar_memoria(&this->arbol);
+        liberar_memoria(this->arbol);
+        delete this->arbol;
     }
 
     bool is_empty()
@@ -43,25 +44,25 @@ public:
     // Profundidad maxima: cantidad total de niveles (contando desde 1)
     int height()
     {
-        return (this->cantidad_nodos == 0) ? 0 : this->arbol.height();
+        return (this->cantidad_nodos == 0) ? 0 : this->arbol->height();
     }
 
     bool contains(const T &elemento)
     {
-        return busqueda_booleana(elemento, &this->arbol);
+        return busqueda_booleana(elemento, this->arbol);
     }
 
     void insert(const T &elemento)
     {
         if (this->cantidad_nodos == 0)
         {
-            this->arbol.set_element(elemento);
+            this->arbol->set_element(elemento);
             this->cantidad_nodos = 1;
 
             return;
         }
 
-        ArbolBinario<T> *nodo_actual{ &this->arbol };
+        ArbolBinario<T> *nodo_actual{ this->arbol };
 
         do
         {
@@ -104,7 +105,7 @@ public:
         verificar_contenido();
         if (this->cantidad_nodos == 1)
         {
-            if (this->arbol.get_element() == elemento)
+            if (this->arbol->get_element() == elemento)
             {
                 make_empty();
             }
@@ -112,7 +113,7 @@ public:
             return;
         }
 
-        ArbolBinario<T> *nodo_eliminar{ &this->arbol };
+        ArbolBinario<T> *nodo_eliminar{ this->arbol };
 
         while (nodo_eliminar->get_element() != elemento)
         {
@@ -190,9 +191,9 @@ public:
         this->n_nodos = this->cantidad_nodos;
         this->iterador = 0;
 
-        liberar_memoria(&this->arbol);
+        liberar_memoria(this->arbol);
 
-        this->arbol.make_tree(T{}, nullptr, nullptr);
+        this->arbol->make_tree(T{}, nullptr, nullptr);
         this->cantidad_nodos = 0;
     }
 
@@ -200,7 +201,7 @@ public:
     {
         verificar_contenido();
 
-        ArbolBinario<T> *nodo_actual{ &this->arbol };
+        ArbolBinario<T> *nodo_actual{ this->arbol };
         while (nodo_actual->get_left_child() != nullptr)
         {
             nodo_actual = nodo_actual->get_left_child();
@@ -213,7 +214,7 @@ public:
     {
         verificar_contenido();
 
-        ArbolBinario<T> *nodo_actual{ &this->arbol };
+        ArbolBinario<T> *nodo_actual{ this->arbol };
         while (nodo_actual->get_right_child() != nullptr)
         {
             nodo_actual = nodo_actual->get_right_child();
@@ -224,22 +225,22 @@ public:
 
     void pre_order()
     {
-        this->arbol.pre_order();
+        this->arbol->pre_order();
     }
     
     void in_order()
     {
-        this->arbol.in_order();
+        this->arbol->in_order();
     }
 
     void post_order()
     {
-        this->arbol.post_order();
+        this->arbol->post_order();
     }
 
     void level_order()
     {
-        this->arbol.level_order();
+        this->arbol->level_order();
     }
 
 private:
