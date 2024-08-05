@@ -115,9 +115,40 @@ int main()
     std::cout << "\n[+] Minimo: " << bst_2.find_min() << '\n';
     std::cout << "[+] Maximo: " << bst_2.find_max() << '\n';
 
+    std::cout << "\n----------- Borrando raiz -----------\n";
+
     bst_2.remove(94);
 
-    std::cout << "\n\nSize: " << bst_2.size() << std::boolalpha << ", vacio: " << bst_2.is_empty();
+    std::cout << "\nSize: " << bst_2.size() << std::boolalpha << ", vacio: " << bst_2.is_empty();
+    std::cout << "\nAltura: " << bst_2.height() << '\n';
+
+    std::cout << "\n[+] Arbol Level Order:\n";
+    bst_2.level_order();
+
+    std::cout << "\n\n[+] Minimo: " << bst_2.find_min() << '\n';
+    std::cout << "[+] Maximo: " << bst_2.find_max() << '\n';
+
+    bst_2.remove(49);
+
+    std::cout << "\nSize: " << bst_2.size() << std::boolalpha << ", vacio: " << bst_2.is_empty();
+    std::cout << "\nAltura: " << bst_2.height() << '\n';
+
+    std::cout << "\n[+] Arbol Level Order:\n";
+    bst_2.level_order();
+
+    std::cout << "\n\n[+] Minimo: " << bst_2.find_min() << '\n';
+    std::cout << "[+] Maximo: " << bst_2.find_max() << '\n';
+
+    bst_2.remove(5);
+    bst_2.remove(71);
+    bst_2.remove(30);
+    bst_2.remove(33);
+    bst_2.remove(84);
+    bst_2.remove(55);
+    bst_2.remove(62);
+    // bst_2.remove(24);
+
+    std::cout << "\nSize: " << bst_2.size() << std::boolalpha << ", vacio: " << bst_2.is_empty();
     std::cout << "\nAltura: " << bst_2.height() << '\n';
 
     std::cout << "\n[+] Arbol Level Order:\n";
