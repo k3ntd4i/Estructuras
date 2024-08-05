@@ -104,7 +104,11 @@ public:
         verificar_contenido();
         if (this->cantidad_nodos == 1)
         {
-            make_empty();
+            if (this->arbol.get_element() == elemento)
+            {
+                make_empty();
+            }
+
             return;
         }
 
@@ -169,7 +173,7 @@ public:
         }
         else
         {
-            ArbolBinario<T> *nodo_menor{ find_menor_derecho(&nodo_eliminar) };
+            ArbolBinario<T> *nodo_menor{ find_menor_derecho(nodo_eliminar) };
             nodo_eliminar->set_element(nodo_menor->get_element());
 
             nodo_menor->get_parent()->set_left_child(nullptr);
