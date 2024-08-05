@@ -17,6 +17,10 @@ int main()
 
     std::cout << '\n';
 
+    // bst_1.remove(5);
+    // bst_2.remove(4);
+    bst_2.remove(5);
+
     // std::cout << bst_1.find_min();
     // std::cout << bst_1.find_max();
     std::cout << "[+] Minimo: " << bst_2.find_min() << '\n';
@@ -56,6 +60,71 @@ int main()
 
     std::cout << "\nContains 55: " << bst_2.contains(55);
     std::cout << "\nContains 123: " << bst_2.contains(123) << '\n';
+
+    std::cout << "[+] Minimo: " << bst_2.find_min() << '\n';
+    std::cout << "[+] Maximo: " << bst_2.find_max() << '\n';
+
+    bst_2.remove(bst_2.find_max());
+    bst_2.remove(bst_2.find_max());
+    bst_2.remove(bst_2.find_max());
+
+    std::cout << "\n[+] Arbol Level Order:\n";
+    bst_2.level_order();
+
+    std::cout << "\n\n[+] Maximo: " << bst_2.find_max() << '\n';
+
+    std::cout << "\nSize: " << bst_2.size() << std::boolalpha << ", vacio: " << bst_2.is_empty();
+    std::cout << "\nAltura: " << bst_2.height() << '\n';
+
+    bst_2.remove(bst_2.find_max());
+
+    std::cout << "\nSize: " << bst_2.size() << std::boolalpha << ", vacio: " << bst_2.is_empty();
+    std::cout << "\nAltura: " << bst_2.height() << '\n';
+
+    std::cout << "\n[+] Arbol Level Order:\n";
+    bst_2.level_order();
+
+    bst_2.remove(47);
+
+    std::cout << "\n\nSize: " << bst_2.size() << std::boolalpha << ", vacio: " << bst_2.is_empty();
+    std::cout << "\nAltura: " << bst_2.height() << '\n';
+
+    std::cout << "\n[+] Arbol Level Order:\n";
+    bst_2.level_order();
+
+    bst_2.remove(59);
+
+    std::cout << "\n\nSize: " << bst_2.size() << std::boolalpha << ", vacio: " << bst_2.is_empty();
+    std::cout << "\nAltura: " << bst_2.height() << '\n';
+
+    std::cout << "\n[+] Arbol Level Order:\n";
+    bst_2.level_order();
+
+    bst_2.remove(bst_2.find_max());
+    bst_2.remove(bst_2.find_max());
+    bst_2.remove(bst_2.find_max());
+    bst_2.remove(bst_2.find_max());
+    bst_2.remove(bst_2.find_max());
+
+    std::cout << "\n\nSize: " << bst_2.size() << std::boolalpha << ", vacio: " << bst_2.is_empty();
+    std::cout << "\nAltura: " << bst_2.height() << '\n';
+
+    std::cout << "\n[+] Arbol Level Order:\n";
+    bst_2.level_order();
+
+    std::cout << "\n[+] Minimo: " << bst_2.find_min() << '\n';
+    std::cout << "[+] Maximo: " << bst_2.find_max() << '\n';
+
+    bst_2.remove(94);
+
+    std::cout << "\n\nSize: " << bst_2.size() << std::boolalpha << ", vacio: " << bst_2.is_empty();
+    std::cout << "\nAltura: " << bst_2.height() << '\n';
+
+    std::cout << "\n[+] Arbol Level Order:\n";
+    bst_2.level_order();
+
+    std::cout << "\n\n[+] Minimo: " << bst_2.find_min() << '\n';
+    std::cout << "[+] Maximo: " << bst_2.find_max() << '\n';
 
     return 0;
 }
