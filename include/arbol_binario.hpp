@@ -39,6 +39,23 @@ public:
         actualizar_datos(sub_arbol_izquierdo, sub_arbol_derecho);
     }
 
+    ~ArbolBinario()
+    {
+        if (this->raiz != nullptr)
+        {
+            if (this->raiz->get_left_child() == this)
+            {
+                this->raiz->remove_subtree(true);
+            }
+            else if (this->raiz->get_right_child() == this)
+            {
+                this->raiz->remove_subtree(false);
+            }
+        }
+
+        make_tree(T{}, nullptr, nullptr);
+    }
+
     bool is_leaf()
     {
         return (this->cantidad_nodos == 1);
@@ -135,6 +152,7 @@ public:
         {
             this->hijo_izquierdo->raiz = nullptr;
         }
+
         if (this->hijo_derecho != nullptr)
         {
             this->hijo_derecho->raiz = nullptr;
