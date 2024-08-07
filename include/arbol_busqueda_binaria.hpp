@@ -2,6 +2,7 @@
 
 #include "arbol_binario.hpp"
 #include <stdexcept>
+#include <iostream>
 
 template<typename T>
 class ArbolBusquedaBinaria
@@ -17,18 +18,10 @@ public:
     {
     }
 
-private:
-    int n_nodos{};
-    int iterador{};
-
 public:
     ~ArbolBusquedaBinaria()
     {
-        this->n_nodos = this->cantidad_nodos;
-        this->iterador = 0;
-
         liberar_memoria(this->arbol);
-        delete this->arbol;
     }
 
     bool is_empty()
@@ -54,9 +47,11 @@ public:
 
     void insert(const T &elemento)
     {
+        ArbolBinario<T> *nuevo_nodo{ new ArbolBinario<T>{ elemento } };
+
         if (this->cantidad_nodos == 0)
         {
-            this->arbol->set_element(elemento);
+            this->arbol = nuevo_nodo;
             this->cantidad_nodos = 1;
 
             return;
@@ -86,13 +81,11 @@ public:
             }
         } while (!nodo_actual->is_leaf());
 
-        ArbolBinario<T> *nuevo_nodo{ new ArbolBinario<T>{ elemento } };
-
         if (elemento < nodo_actual->get_element())
         {
             nodo_actual->set_left_child(nuevo_nodo);
         }
-        else if (elemento > nodo_actual->get_element())
+        else // elemento > nodo_actual->get_element()
         {
             nodo_actual->set_right_child(nuevo_nodo);
         }        
@@ -103,15 +96,6 @@ public:
     void remove(const T &elemento)
     {
         verificar_contenido();
-        if (this->cantidad_nodos == 1)
-        {
-            if (this->arbol->get_element() == elemento)
-            {
-                make_empty();
-            }
-
-            return;
-        }
 
         ArbolBinario<T> *nodo_eliminar{ this->arbol };
 
@@ -133,102 +117,51 @@ public:
             }
         }
 
-        if (nodo_eliminar == this->arbol)
-        {
-            if (nodo_eliminar->get_left_child() != nullptr
-                && nodo_eliminar->get_right_child() == nullptr)
-            {
-                this->arbol = nodo_eliminar->get_left_child();
-                nodo_eliminar->set_left_child(nullptr);
-            }
-            else if (nodo_eliminar->get_left_child() == nullptr
-                && nodo_eliminar->get_right_child() != nullptr)
-            {
-                this->arbol = nodo_eliminar->get_right_child();
-                nodo_eliminar->set_right_child(nullptr);
-            }
-            else if (nodo_eliminar->get_left_child() != nullptr
-                && nodo_eliminar->get_right_child() != nullptr)
-            {
-                ArbolBinario<T> *nodo_menor{ find_menor_derecho(nodo_eliminar) };
-                nodo_eliminar->set_element(nodo_menor->get_element());
-
-                ArbolBinario<T> *nodo_padre{ nodo_menor->get_parent() };
-
-                if (nodo_padre->get_left_child() == nodo_menor)
-                {
-                    nodo_padre->set_left_child(nullptr);
-                }
-                else if (nodo_padre->get_right_child() == nodo_menor)
-                {
-                    nodo_padre->set_right_child(nullptr);
-                }
-
-                nodo_eliminar = nodo_menor;
-            }
-
-            delete nodo_eliminar;
-            this->cantidad_nodos --;
-
-            return;
-        }
-
-        ArbolBinario<T> *nodo_padre{ nodo_eliminar->get_parent() };
-        ArbolBinario<T> *padre_hijo_izquierdo{ nodo_padre->get_left_child() };
-        ArbolBinario<T> *padre_hijo_derecho{ nodo_padre->get_right_child() };
-
         if (nodo_eliminar->is_leaf())
         {
-            if (padre_hijo_izquierdo == nodo_eliminar)
-            {
-                nodo_padre->set_left_child(nullptr);
-            }
-            else if (padre_hijo_derecho == nodo_eliminar)
-            {
-                nodo_padre->set_right_child(nullptr);
+            if (nodo_eliminar->get_parent() == nullptr)
+            {       
+                this->arbol = nullptr;
             }
         }
         else if (nodo_eliminar->get_left_child() != nullptr
-            && nodo_eliminar->get_right_child() == nullptr)
-        {
-            if (padre_hijo_izquierdo == nodo_eliminar)
-            {
-                nodo_padre->set_left_child(nodo_eliminar->get_left_child());
-            }
-            else if (padre_hijo_derecho == nodo_eliminar)
-            {
-                nodo_padre->set_right_child(nodo_eliminar->get_left_child());
-            }
-        }
-        else if (nodo_eliminar->get_left_child() == nullptr
             && nodo_eliminar->get_right_child() != nullptr)
-        {
-            if (padre_hijo_izquierdo == nodo_eliminar)
-            {
-                nodo_padre->set_left_child(nodo_eliminar->get_right_child());
-            }
-            else if (padre_hijo_derecho == nodo_eliminar)
-            {
-                nodo_padre->set_right_child(nodo_eliminar->get_right_child());
-            }
-        }
-        else
         {
             ArbolBinario<T> *nodo_menor{ find_menor_derecho(nodo_eliminar) };
             nodo_eliminar->set_element(nodo_menor->get_element());
 
-            nodo_padre = nodo_menor->get_parent();
-
-            if (nodo_padre->get_left_child() == nodo_menor)
-            {
-                nodo_padre->set_left_child(nullptr);
-            }
-            else if (nodo_padre->get_right_child() == nodo_menor)
-            {
-                nodo_padre->set_right_child(nullptr);
-            }
-
             nodo_eliminar = nodo_menor;
+        }
+        else
+        {
+            ArbolBinario<T> *nodo_unir{};
+
+            if (nodo_eliminar->get_left_child() != nullptr)
+            {
+                nodo_unir = nodo_eliminar->get_left_child();
+            }
+            else
+            {
+                nodo_unir = nodo_eliminar->get_right_child();
+            }
+
+            if (nodo_eliminar->get_parent() == nullptr)
+            {
+                this->arbol = nodo_unir;
+            }
+            else
+            {
+                ArbolBinario<T> *nodo_padre{ nodo_eliminar->get_parent() };
+
+                if (nodo_padre->get_left_child() == nodo_eliminar)
+                {
+                    nodo_padre->set_left_child(nodo_unir);
+                }
+                else
+                {
+                    nodo_padre->set_right_child(nodo_unir);
+                }
+            }
         }
 
         delete nodo_eliminar;
@@ -237,12 +170,9 @@ public:
 
     void make_empty()
     {
-        this->n_nodos = this->cantidad_nodos;
-        this->iterador = 0;
-
         liberar_memoria(this->arbol);
 
-        this->arbol->make_tree(T{}, nullptr, nullptr);
+        this->arbol = nullptr;
         this->cantidad_nodos = 0;
     }
 
@@ -274,22 +204,50 @@ public:
 
     void pre_order()
     {
-        this->arbol->pre_order();
+        if (this->arbol != nullptr)
+        {
+            this->arbol->pre_order();
+        }
+        else
+        {
+            std::cout << "[]";
+        }
     }
     
     void in_order()
     {
-        this->arbol->in_order();
+        if (this->arbol != nullptr)
+        {
+            this->arbol->in_order();
+        }
+        else
+        {
+            std::cout << "[]";
+        }
     }
 
     void post_order()
     {
-        this->arbol->post_order();
+        if (this->arbol != nullptr)
+        {
+            this->arbol->post_order();
+        }
+        else
+        {
+            std::cout << "[]";
+        }
     }
 
     void level_order()
     {
-        this->arbol->level_order();
+        if (this->arbol != nullptr)
+        {
+            this->arbol->level_order();
+        }
+        else
+        {
+            std::cout << "[]";
+        }
     }
 
 private:
@@ -317,7 +275,7 @@ private:
         {
             encontrado = busqueda_booleana(elemento, arbol->get_left_child());
         }
-        else if (elemento > arbol->get_element())
+        else // elemento > arbol->get_element()
         {
             encontrado = busqueda_booleana(elemento, arbol->get_right_child());
         }
@@ -325,9 +283,9 @@ private:
         return encontrado;
     }
 
-    ArbolBinario<T> *find_menor_derecho(ArbolBinario<T> *sub_arbol)
+    ArbolBinario<T> *find_menor_derecho(ArbolBinario<T> *nodo_base)
     {
-        ArbolBinario<T> *nodo_actual{ sub_arbol->get_right_child() };
+        ArbolBinario<T> *nodo_actual{ nodo_base->get_right_child() };
         while (nodo_actual->get_left_child() != nullptr)
         {
             nodo_actual = nodo_actual->get_left_child();
@@ -343,12 +301,7 @@ private:
             liberar_memoria(sub_arbol->get_left_child());
             liberar_memoria(sub_arbol->get_right_child());
             
-            this->iterador ++;
-
-            if (this->iterador < this->n_nodos)
-            {
-                delete sub_arbol;
-            }
+            delete sub_arbol;
         }
     }
 };
