@@ -18,7 +18,6 @@ public:
     {
     }
 
-public:
     ~ArbolBusquedaBinaria()
     {
         liberar_memoria(this->arbol);
