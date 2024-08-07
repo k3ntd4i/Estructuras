@@ -57,7 +57,7 @@ La altura del árbol se cuenta desde $`1`$, pero será $`0`$ si el árbol está 
   - [x] Cola Doble
   - [ ] Arreglo dinámico
 - [x] Árbol Binario
-  - [ ] BST
+  - [x] BST
   - [ ] AVL
   - [ ] Red-Black
   - [ ] Heap
