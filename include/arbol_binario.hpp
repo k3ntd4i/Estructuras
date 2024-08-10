@@ -47,7 +47,7 @@ public:
             {
                 this->raiz->remove_subtree(true);
             }
-            else if (this->raiz->get_right_child() == this)
+            else // this->raiz->get_right_child() == this
             {
                 this->raiz->remove_subtree(false);
             }
