@@ -18,7 +18,7 @@ public:
     {
         if (capacidad_inicial < 1)
         {
-            throw std::out_of_range("La capacidad inicial debe ser mayor o igual a 1");
+            throw std::out_of_range{ "La capacidad inicial debe ser mayor o igual a 1" };
         }
 
         this->arreglo = new T[capacidad_inicial]{};
@@ -80,7 +80,7 @@ public:
     {
         if (posicion < 0 || posicion > this->longitud)
         {
-            throw std::out_of_range("Indice fuera de rango.");
+            throw std::out_of_range{ "Indice fuera de rango." };
         }
 
         if (this->longitud == this->capacidad)
@@ -127,7 +127,7 @@ private:
     {
         if (posicion < 0 || posicion >= this->longitud)
         {
-            throw std::out_of_range("Indice fuera de rango.");
+            throw std::out_of_range{ "Indice fuera de rango." };
         }
     }
 };
