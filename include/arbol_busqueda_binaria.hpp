@@ -254,7 +254,7 @@ private:
     {
         if (this->cantidad_nodos == 0)
         {
-            throw std::out_of_range("El arbol esta vacio.");
+            throw std::out_of_range{ "El arbol esta vacio." };
         }
     }
 
