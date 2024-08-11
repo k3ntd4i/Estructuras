@@ -61,7 +61,7 @@ public:
         do
         {
             if (elemento < nodo_actual->get_element()
-                && nodo_actual->get_left_child() != nullptr )
+                && nodo_actual->get_left_child() != nullptr)
             {
                 nodo_actual = nodo_actual->get_left_child();
             }
@@ -101,7 +101,7 @@ public:
         while (nodo_eliminar->get_element() != elemento)
         {
             if (elemento < nodo_eliminar->get_element()
-                && nodo_eliminar->get_left_child() != nullptr )
+                && nodo_eliminar->get_left_child() != nullptr)
             {
                 nodo_eliminar = nodo_eliminar->get_left_child();
             }
@@ -112,7 +112,8 @@ public:
             }
             else
             {
-                return; // Elemento no encontrado: no hacer nada
+                // Elemento no encontrado: no hacer nada
+                return;
             }
         }
 
@@ -203,50 +204,46 @@ public:
 
     void pre_order()
     {
-        if (this->arbol != nullptr)
-        {
-            this->arbol->pre_order();
-        }
-        else
+        if (this->arbol == nullptr)
         {
             std::cout << "[]";
+            return;
         }
+
+        this->arbol->pre_order();
     }
     
     void in_order()
     {
-        if (this->arbol != nullptr)
-        {
-            this->arbol->in_order();
-        }
-        else
+        if (this->arbol == nullptr)
         {
             std::cout << "[]";
+            return;
         }
+
+        this->arbol->in_order();
     }
 
     void post_order()
     {
-        if (this->arbol != nullptr)
-        {
-            this->arbol->post_order();
-        }
-        else
+        if (this->arbol == nullptr)
         {
             std::cout << "[]";
+            return;
         }
+
+        this->arbol->post_order();
     }
 
     void level_order()
     {
-        if (this->arbol != nullptr)
-        {
-            this->arbol->level_order();
-        }
-        else
+        if (this->arbol == nullptr)
         {
             std::cout << "[]";
+            return;
         }
+
+        this->arbol->level_order();
     }
 
 private:
@@ -295,12 +292,14 @@ private:
 
     void liberar_memoria(ArbolBinario<T> *sub_arbol)
     {
-        if (sub_arbol != nullptr)
+        if (sub_arbol == nullptr)
         {
-            liberar_memoria(sub_arbol->get_left_child());
-            liberar_memoria(sub_arbol->get_right_child());
-            
-            delete sub_arbol;
+            return;
         }
+
+        liberar_memoria(sub_arbol->get_left_child());
+        liberar_memoria(sub_arbol->get_right_child());
+
+        delete sub_arbol;
     }
 };

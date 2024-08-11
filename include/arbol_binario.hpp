@@ -109,28 +109,26 @@ public:
 
     void set_left_child(ArbolBinario<T> *sub_arbol_izquierdo)
     {
-        if (sub_arbol_izquierdo != nullptr)
-        {
-            set_child(sub_arbol_izquierdo, true);
-            this->hijo_izquierdo = sub_arbol_izquierdo;
-        }
-        else
+        if (sub_arbol_izquierdo == nullptr)
         {
             remove_subtree(true);
+            return;
         }
+
+        set_child(sub_arbol_izquierdo, true);
+        this->hijo_izquierdo = sub_arbol_izquierdo;
     }
 
     void set_right_child(ArbolBinario<T> *sub_arbol_derecho)
     {
-        if (sub_arbol_derecho != nullptr)
-        {
-            set_child(sub_arbol_derecho, false);
-            this->hijo_derecho = sub_arbol_derecho;
-        }
-        else
+        if (sub_arbol_derecho == nullptr)
         {
             remove_subtree(false);
+            return;
         }
+
+        set_child(sub_arbol_derecho, false);
+        this->hijo_derecho = sub_arbol_derecho;
     }
 
     void set_element(const T &dato)
@@ -383,7 +381,7 @@ private:
             {
                 sub_arbol->raiz->remove_subtree(true);
             }
-            else if (sub_arbol->raiz->hijo_derecho == sub_arbol)
+            else // sub_arbol->raiz->hijo_derecho == sub_arbol
             {
                 sub_arbol->raiz->remove_subtree(false);
             }
@@ -433,53 +431,59 @@ private:
 
     void pre_order_recursivo(ArbolBinario<T> *arbol)
     {
-        if (arbol != nullptr)
+        if (arbol == nullptr)
         {
-            std::cout << arbol->elemento;
-            this->iterador ++;
-
-            if (this->iterador < this->n_nodos)
-            {
-                std::cout << ", ";
-            }
-
-            pre_order_recursivo(arbol->hijo_izquierdo);
-            pre_order_recursivo(arbol->hijo_derecho);
+            return;
         }
+
+        std::cout << arbol->elemento;
+        this->iterador ++;
+
+        if (this->iterador < this->n_nodos)
+        {
+            std::cout << ", ";
+        }
+
+        pre_order_recursivo(arbol->hijo_izquierdo);
+        pre_order_recursivo(arbol->hijo_derecho);
     }
     
     void in_order_recursivo(ArbolBinario<T> *arbol)
     {
-        if (arbol != nullptr)
+        if (arbol == nullptr)
         {
-            in_order_recursivo(arbol->hijo_izquierdo);
-
-            std::cout << arbol->elemento;
-            this->iterador ++;
-
-            if (this->iterador < this->n_nodos)
-            {
-                std::cout << ", ";
-            }
-
-            in_order_recursivo(arbol->hijo_derecho);
+            return;
         }
+
+        in_order_recursivo(arbol->hijo_izquierdo);
+
+        std::cout << arbol->elemento;
+        this->iterador ++;
+
+        if (this->iterador < this->n_nodos)
+        {
+            std::cout << ", ";
+        }
+
+        in_order_recursivo(arbol->hijo_derecho);
     }
 
     void post_order_recursivo(ArbolBinario<T> *arbol)
     {
-        if (arbol != nullptr)
+        if (arbol == nullptr)
         {
-            post_order_recursivo(arbol->hijo_izquierdo);
-            post_order_recursivo(arbol->hijo_derecho);
+            return;
+        }
 
-            std::cout << arbol->elemento;
-            this->iterador ++;
+        post_order_recursivo(arbol->hijo_izquierdo);
+        post_order_recursivo(arbol->hijo_derecho);
 
-            if (this->iterador < this->n_nodos)
-            {
-                std::cout << ", ";
-            }
+        std::cout << arbol->elemento;
+        this->iterador ++;
+
+        if (this->iterador < this->n_nodos)
+        {
+            std::cout << ", ";
         }
     }
 };

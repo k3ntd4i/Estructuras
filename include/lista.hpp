@@ -72,7 +72,8 @@ public:
             this->arreglo[i - 1] = this->arreglo[i];
         }
 
-        this->arreglo[--this->longitud] = T{}; // Le asigna el valor por defecto de T
+        // Le asigna el valor por defecto de T
+        this->arreglo[--this->longitud] = T{};
         return elemento_removido;
     }
 
