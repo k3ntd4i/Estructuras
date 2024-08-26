@@ -235,19 +235,19 @@ public:
         array_nodos[0] = this;
 
         this->iterador = 0;
-        int indice_inserción{ 1 };
+        int indice_insercion{ 1 };
         for (int i{0}; i < this->cantidad_nodos; i++)
         {
             if (array_nodos[i]->hijo_izquierdo != nullptr)
             {
-                array_nodos[indice_inserción] = array_nodos[i]->hijo_izquierdo;
-                indice_inserción++;
+                array_nodos[indice_insercion] = array_nodos[i]->hijo_izquierdo;
+                indice_insercion++;
             }
 
             if (array_nodos[i]->hijo_derecho != nullptr)
             {
-                array_nodos[indice_inserción] = array_nodos[i]->hijo_derecho;
-                indice_inserción++;
+                array_nodos[indice_insercion] = array_nodos[i]->hijo_derecho;
+                indice_insercion++;
             }
 
             std::cout << array_nodos[i]->elemento;
