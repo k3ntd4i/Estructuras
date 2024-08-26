@@ -15,6 +15,8 @@ class ArbolBinario
 
     ArbolBinario<T> *raiz{ nullptr };
 
+    int frecuencia{ 1 };
+
 public:
     ArbolBinario() = default;
 
@@ -35,6 +37,7 @@ public:
         , cantidad_nodos{ 1 }
         , altura{ 1 }
         , raiz{ nullptr }
+        , frecuencia{ 1 }
     {
         actualizar_datos(sub_arbol_izquierdo, sub_arbol_derecho);
     }
@@ -107,6 +110,11 @@ public:
         return this->elemento;
     }
 
+    int get_frequency()
+    {
+        return this->frecuencia;
+    }
+
     void set_left_child(ArbolBinario<T> *sub_arbol_izquierdo)
     {
         if (sub_arbol_izquierdo == nullptr)
@@ -134,6 +142,26 @@ public:
     void set_element(const T &dato)
     {
         this->elemento = dato;
+    }
+
+    void decrease_frequency()
+    {
+        this->frecuencia --;
+    }
+
+    void reset_frequency()
+    {
+        this->frecuencia = 1;
+    }
+
+    void increase_frequency()
+    {
+        this->frecuencia ++;
+    }
+
+    void increase_frequency(int incremento)
+    {
+        this->frecuencia = std::max(this->frecuencia += incremento, 1);
     }
 
     // Reemplazar el arbol existente en la instancia por uno nuevo
