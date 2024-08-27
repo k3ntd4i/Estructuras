@@ -70,24 +70,25 @@ public:
             {
                 nodo_actual = nodo_actual->get_right_child();
             }
-            else if (elemento == nodo_actual->get_element())
-            {
-                return;
-            }
             else
             {
                 break;
             }
         } while (!nodo_actual->is_leaf());
 
-        if (elemento < nodo_actual->get_element())
+        if (elemento == nodo_actual->get_element())
+        {
+            nodo_actual->increase_frequency();
+            return;
+        }
+        else if (elemento < nodo_actual->get_element())
         {
             nodo_actual->set_left_child(nuevo_nodo);
         }
         else // elemento > nodo_actual->get_element()
         {
             nodo_actual->set_right_child(nuevo_nodo);
-        }        
+        }
 
         this->cantidad_nodos ++;
     }
@@ -117,17 +118,20 @@ public:
             }
         }
 
+        if (nodo_eliminar->get_frequency() > 1)
+        {
+            nodo_eliminar->decrease_frequency();
+            return;
+        }
+
         if (nodo_eliminar->is_leaf())
         {
             if (nodo_eliminar->get_parent() == nullptr)
             {       
                 this->arbol = nullptr;
             }
-
-            return;
         }
-
-        if (nodo_eliminar->get_left_child() != nullptr
+        else if (nodo_eliminar->get_left_child() != nullptr
             && nodo_eliminar->get_right_child() != nullptr)
         {
             ArbolBinario<T> *nodo_menor{ find_menor_derecho(nodo_eliminar) };
@@ -136,32 +140,35 @@ public:
             nodo_eliminar = nodo_menor;
         }
 
-        ArbolBinario<T> *nodo_unir{};
+        if (!nodo_eliminar->is_leaf())
+        {
+            ArbolBinario<T> *nodo_unir{};
 
-        if (nodo_eliminar->get_left_child() != nullptr)
-        {
-            nodo_unir = nodo_eliminar->get_left_child();
-        }
-        else
-        {
-            nodo_unir = nodo_eliminar->get_right_child();
-        }
-
-        if (nodo_eliminar->get_parent() == nullptr)
-        {
-            this->arbol = nodo_unir;
-        }
-        else
-        {
-            ArbolBinario<T> *nodo_padre{ nodo_eliminar->get_parent() };
-
-            if (nodo_padre->get_left_child() == nodo_eliminar)
+            if (nodo_eliminar->get_left_child() != nullptr)
             {
-                nodo_padre->set_left_child(nodo_unir);
+                nodo_unir = nodo_eliminar->get_left_child();
             }
             else
             {
-                nodo_padre->set_right_child(nodo_unir);
+                nodo_unir = nodo_eliminar->get_right_child();
+            }
+
+            if (nodo_eliminar->get_parent() == nullptr)
+            {
+                this->arbol = nodo_unir;
+            }
+            else
+            {
+                ArbolBinario<T> *nodo_padre{ nodo_eliminar->get_parent() };
+
+                if (nodo_padre->get_left_child() == nodo_eliminar)
+                {
+                    nodo_padre->set_left_child(nodo_unir);
+                }
+                else
+                {
+                    nodo_padre->set_right_child(nodo_unir);
+                }
             }
         }
 

@@ -279,6 +279,12 @@ public:
             }
 
             std::cout << array_nodos[i]->elemento;
+
+            if (array_nodos[i]->get_frequency() > 1)
+            {
+                std::cout << '{' << array_nodos[i]->get_frequency() << '}';
+            }
+
             this->iterador ++;
 
             if (this->iterador < this->cantidad_nodos)
@@ -465,6 +471,12 @@ private:
         }
 
         std::cout << arbol->elemento;
+
+        if (arbol->get_frequency() > 1)
+        {
+            std::cout << '{' << arbol->get_frequency() << '}';
+        }
+
         this->iterador ++;
 
         if (this->iterador < this->n_nodos)
@@ -486,6 +498,12 @@ private:
         in_order_recursivo(arbol->hijo_izquierdo);
 
         std::cout << arbol->elemento;
+
+        if (arbol->get_frequency() > 1)
+        {
+            std::cout << '{' << arbol->get_frequency() << '}';
+        }
+
         this->iterador ++;
 
         if (this->iterador < this->n_nodos)
@@ -507,6 +525,12 @@ private:
         post_order_recursivo(arbol->hijo_derecho);
 
         std::cout << arbol->elemento;
+
+        if (arbol->get_frequency() > 1)
+        {
+            std::cout << '{' << arbol->get_frequency() << '}';
+        }
+
         this->iterador ++;
 
         if (this->iterador < this->n_nodos)
