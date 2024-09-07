@@ -7,7 +7,7 @@ int main()
 {
     ArbolBinario<int> arbol{};
     ArbolBusquedaBinaria<int> bst{};
-    MaximoHeap<int> heap{ 15 };
+    MaximoHeap<int> heap{};
 
     for (int i{0}; i < 10; ++i)
     {
@@ -22,7 +22,8 @@ int main()
 
     std::cout << '\n';
 
-    for (int i{0}; i < 14; ++i)
+    int longitud{ heap.size() };
+    for (int i{0}; i < longitud; ++i)
     {
         std::cout << heap.extract_max() << ' ';
     }
