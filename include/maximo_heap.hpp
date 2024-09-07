@@ -47,7 +47,16 @@ public:
     {
         if (this->cantidad_nodos == this->capacidad)
         {
-            throw std::overflow_error{ "Heap overflow\n" };
+            this->capacidad *= 2;
+            T *nuevo_arreglo{ new T[this->capacidad]{} };
+
+            for (int i{0}; i < this->cantidad_nodos; ++i)
+            {
+                nuevo_arreglo[i] = this->heap[i];
+            }
+
+            delete[] this->heap;
+            this->heap = nuevo_arreglo;
         }
 
         this->heap[this->cantidad_nodos] = valor;
