@@ -66,7 +66,7 @@ Hay soporte para valores repetidos. Cada nodo tiene un contador que refleja la c
   - [x] BST
   - [ ] AVL
   - [ ] Red-Black
-  - [ ] Max/Min-Heap
+  - [x] Max/Min-Heap
 - [ ] n-Árbol
 - [ ] Grafo
 - [ ] Tabla Hash
