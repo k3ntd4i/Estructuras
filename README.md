@@ -4,6 +4,10 @@ Ignorar lo que esta dentro de las funciones principales `int main()`, allí se e
 
 ## Detalles de implementación
 
+### `Lista`
+
+Se supone que la implementación de lista se debe hacer con punteros puros, no obstante, dicha implementación no es muy eficiente y se había reemplazado por un arreglo dinámico, sin embargo, solo por seguir la teoría y requisitos del proyecto, se ha dejado la version con punteros como la predeterminada (el archivo `include/lista.hpp`). La version con arreglo dinámico (en caso de ser necesitada) está el archivo `include/lista_arreglo_dinamico.hpp`
+
 ### `Pila`, `Cola` y `ColaDoble`
 
 En las implementaciones de `Pila`, `Cola` y `ColaDoble` no se utiliza `this->` para acceder a la instancia base de `Lista` debido a la sencillez del código y la casi inexistencia de otras variables diferentes de _"lista"_. En otras palabras, el uso de `this->` es redundante en este caso, ya que su principal propósito es distinguir entre variables locales y variables de instancia.
@@ -43,6 +47,8 @@ Un árbol de Búsqueda Binaria puede estar vació (sin nodos), puesto que, para 
 
 La altura del árbol se cuenta desde $`1`$, pero será $`0`$ si el árbol está vació.
 
+Hay soporte para valores repetidos. Cada nodo tiene un contador que refleja la cantidad de veces que se ha agregado el valor de dicho nodo
+
 ## Tareas
 
 ### Características
@@ -60,7 +66,7 @@ La altura del árbol se cuenta desde $`1`$, pero será $`0`$ si el árbol está 
   - [x] BST
   - [ ] AVL
   - [ ] Red-Black
-  - [ ] Heap
+  - [ ] Max/Min-Heap
 - [ ] n-Árbol
 - [ ] Grafo
 - [ ] Tabla Hash
