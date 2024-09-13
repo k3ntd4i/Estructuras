@@ -3,7 +3,7 @@
 #include <iostream>
 #include <algorithm>
 
-template<typename T>
+template <typename T>
 class ArbolBinario
 {
     T elemento{};

@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <iostream>
 
-template<typename T>
+template <typename T>
 class ArbolBusquedaBinaria
 {
     ArbolBinario<T> *arbol{ nullptr };

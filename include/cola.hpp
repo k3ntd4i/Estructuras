@@ -2,7 +2,7 @@
 
 #include "lista.hpp"
 
-template<typename T>
+template <typename T>
 class Cola
 {
     Lista<T> lista{};
