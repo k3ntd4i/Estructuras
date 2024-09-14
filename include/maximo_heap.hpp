@@ -43,7 +43,7 @@ public:
         return this->heap[0];
     }
 
-    void put(T valor)
+    void put(const T &valor)
     {
         if (this->cantidad_nodos == this->capacidad)
         {
