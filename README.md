@@ -18,6 +18,10 @@ En el método `level_order` de la clase `ArbolBinario` se utiliza un array estil
 
 En los métodos de la clase `ArbolBinario`, los argumentos que implican otros árboles deben pasarse por referencia. Ej: `arbol.metodo(&otro_arbol);`. Esto se debe a que los parámetros son punteros y esperan una dirección de memoria. No tendría sentido trabajar con copias de los árboles, por lo tanto, se debe acceder a los árboles originales.
 
+### `GrafoSimple`
+
+Para hacer uso de la estructura `GrafoSimple`, se requiere saber de antemano cuantos nodos va a tener el grafo que se desee construir, debido a que se esta implementando con una matriz de adyacencia. En caso de que se requiera una estructura en la que se pueda tener un numero indefinido de nodos, entonces seria mejor utilizar una lista de listas dinámicas.
+
 ## Repositorio
 
 En el directorio `include` se encuentran las implementaciones de las estructuras con la extension `.hpp`, es decir, a modo encabezado (`#include <encabezado>`). En este caso, al ser un encabezado propio, para poder incluir los archivos se deben usar comillas dobles y escribir la ruta relativa (la ubicación del archivo `.hpp` respecto al archivo `.cpp` en el que se está incluyendo): Ej: `#include "include/encabezado.hpp"`.
@@ -48,6 +52,10 @@ Un árbol de Búsqueda Binaria puede estar vació (sin nodos), puesto que, para 
 La altura del árbol se cuenta desde $`1`$, pero será $`0`$ si el árbol está vació.
 
 Hay soporte para valores repetidos. Cada nodo tiene un contador que refleja la cantidad de veces que se ha agregado el valor de dicho nodo
+
+### Grafo simple
+
+Un grafo simple se define como un grafo no dirigido que no admite más de una arista entre dos nodos.
 
 ## Tareas
 
