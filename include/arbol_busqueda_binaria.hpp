@@ -176,7 +176,7 @@ public:
         this->cantidad_nodos --;
     }
 
-    void make_empty()
+    void clear()
     {
         liberar_memoria(this->arbol);
 
