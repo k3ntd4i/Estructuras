@@ -6,7 +6,7 @@ Ignorar lo que esta dentro de las funciones principales `int main()`, allí se e
 
 ### `Lista`
 
-Se supone que la implementación de lista se debe hacer con punteros puros, no obstante, dicha implementación no es muy eficiente y se había reemplazado por un arreglo dinámico, sin embargo, solo por seguir la teoría y requisitos del proyecto, se ha dejado la version con punteros como la predeterminada (el archivo `include/lista.hpp`). La version con arreglo dinámico (en caso de ser necesitada) está el archivo `include/lista_arreglo_dinamico.hpp`
+Se supone que la implementación de lista se debe hacer con punteros puros, no obstante, dicha implementación no es muy eficiente y se había reemplazado por un arreglo dinámico, sin embargo, solo por seguir la teoría y requisitos del proyecto, se ha dejado la version con punteros como la predeterminada (el archivo `include/lista.hpp`). La version con arreglo dinámico (en caso de ser necesitada) está el archivo `include/lista_arreglo_dinamico.hpp`.
 
 ### `Pila`, `Cola` y `ColaDoble`
 
@@ -21,6 +21,8 @@ En los métodos de la clase `ArbolBinario`, los argumentos que implican otros á
 ### `GrafoSimple`
 
 Para hacer uso de la estructura `GrafoSimple`, se requiere saber de antemano cuantos nodos va a tener el grafo que se desee construir, debido a que se esta implementando con una matriz de adyacencia. En caso de que se requiera una estructura en la que se pueda tener un numero indefinido de nodos, entonces seria mejor utilizar una lista de listas dinámicas.
+
+La matriz de adyacencia se implementa como un arreglo unidimensional para evitar la fragmentación de la memoria. Esto reduce la necesidad de acceder a ubicaciones aleatorias en la memoria para cada fila de la matriz, ya que al crear un arreglo bidimensional se genera un arreglo de arreglos. En este caso, cada posición del arreglo principal debe tener un arreglo separado, cuya ubicación es aleatoria, lo que puede provocar un _cache miss_ (tener tiempos de espera). De todas maneras, se está creando un arreglo de longitud $`n * n`$, donde $`n`$ es la cantidad de nodos, por lo tanto, es lo mismo que utilizar un arreglo normal. Además, esta implementación evita el uso de bucles anidados para crear, asignar y eliminar elementos, aprovechando que la matriz es simétrica en este caso.
 
 ## Repositorio
 
@@ -47,11 +49,11 @@ _Dada una raíz, se tiene que:_
 - _Las claves almacenadas en el subárbol derecho de la raíz son mayores que la clave de la raíz._
 - _Todos los subárboles cumplen estas propiedades._
 
-Un árbol de Búsqueda Binaria puede estar vació (sin nodos), puesto que, para ser considerado _no vació_, el usuario debe insertar un elemento explícitamente
+Un árbol de Búsqueda Binaria puede estar vació (sin nodos), puesto que, para ser considerado _no vació_, el usuario debe insertar un elemento explícitamente.
 
 La altura del árbol se cuenta desde $`1`$, pero será $`0`$ si el árbol está vació.
 
-Hay soporte para valores repetidos. Cada nodo tiene un contador que refleja la cantidad de veces que se ha agregado el valor de dicho nodo
+Hay soporte para valores repetidos. Cada nodo tiene un contador que refleja la cantidad de veces que se ha agregado el valor de dicho nodo.
 
 ### Grafo simple
 
