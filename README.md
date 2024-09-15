@@ -24,6 +24,8 @@ Para hacer uso de la estructura `GrafoSimple`, se requiere saber de antemano cua
 
 La matriz de adyacencia se implementa como un arreglo unidimensional para evitar la fragmentación de la memoria. Esto reduce la necesidad de acceder a ubicaciones aleatorias en la memoria para cada fila de la matriz, ya que al crear un arreglo bidimensional se genera un arreglo de arreglos. En este caso, cada posición del arreglo principal debe tener un arreglo separado, cuya ubicación es aleatoria, lo que puede provocar un _cache miss_ (tener tiempos de espera). De todas maneras, se está creando un arreglo de longitud $`n \times n`$, donde $`n`$ es la cantidad de nodos, por lo tanto, es lo mismo que utilizar un arreglo normal. Además, esta implementación evita el uso de bucles anidados para crear, asignar y eliminar elementos, aprovechando que la matriz es simétrica en este caso.
 
+El método `get_adjacent_nodes` devuelve una dirección a una estructura `Lista` creada usando `new`, por lo tanto, EL USUARIO DEBE LIBERAR LA MEMORIA. Esto implica crear una variable de tipo puntero hacia una estructura `Lista` para poder hacer `delete` luego de utilizar dicho método.
+
 ## Repositorio
 
 En el directorio `include` se encuentran las implementaciones de las estructuras con la extension `.hpp`, es decir, a modo encabezado (`#include <encabezado>`). En este caso, al ser un encabezado propio, para poder incluir los archivos se deben usar comillas dobles y escribir la ruta relativa (la ubicación del archivo `.hpp` respecto al archivo `.cpp` en el que se está incluyendo): Ej: `#include "include/encabezado.hpp"`.
