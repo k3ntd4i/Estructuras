@@ -147,7 +147,16 @@ public:
 
     void clear()
     {
-        // por hacer
+        for (int i{0}; i < this->capacidad; ++i)
+        {
+            delete this->lista_nodos[i];
+        }
+
+        delete[] this->lista_nodos;
+        this->lista_nodos = new Node*[this->capacidad]{};
+
+        delete[] this->matriz_adyacencia;
+        this->matriz_adyacencia = new bool[this->capacidad * this->capacidad]{};
     }
 
     // El usuario es el responsable de liberar la memoria
