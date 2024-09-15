@@ -1,5 +1,6 @@
 #include <iostream>
 #include "include/grafo_simple.hpp"
+#include "include/lista.hpp"
 
 class Objeto
 {
@@ -131,6 +132,41 @@ int main()
     std::cout << '\n';
 
     delete grafo.remove_node(0);
+
+    std::cout << "\n Grafo 2 -----------------------------------\n";
+
+    GrafoSimple<std::string> otro_grafo{ 6 };
+
+    otro_grafo.set_node(0, "Empresa 1");
+    otro_grafo.set_node(1, "Empresa 2");
+    otro_grafo.set_node(2, "Empresa 3");
+    otro_grafo.set_node(3, "Empresa 4");
+    otro_grafo.set_node(4, "Empresa 5");
+    otro_grafo.set_node(5, "Empresa 6");
+
+    otro_grafo.update_edge(0, 1, true);
+    otro_grafo.update_edge(0, 3, true);
+    otro_grafo.update_edge(1, 3, true);
+    otro_grafo.update_edge(1, 4, true);
+    otro_grafo.update_edge(3, 4, true);
+    otro_grafo.update_edge(4, 2, true);
+    otro_grafo.update_edge(2, 5, true);
+
+    std::cout << '\n';
+    otro_grafo.print_matrix();
+    std::cout << '\n';
+
+    Lista<std::string> *adyacentes{};
+    for(int i{0}; i < otro_grafo.size(); ++i)
+    {
+        adyacentes = otro_grafo.get_adjacent_nodes(i);
+
+        std::cout << "Nodo: " << i + 1 << ": ";
+        adyacentes->output();
+
+        delete adyacentes;
+        std::cout << '\n';
+    }
 
     return 0;
 }
