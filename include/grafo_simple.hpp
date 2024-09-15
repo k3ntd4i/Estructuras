@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include "lista.hpp"
 
 template <typename T>
 class GrafoSimple
@@ -63,10 +64,10 @@ public:
 
         for (int i{0}; i < this->capacidad; ++i)
         {
-            if (this->matriz_adyacencia[(this->capacidad * i) + indice_nodo])
+            if (this->matriz_adyacencia[(this->capacidad * indice_nodo) + i])
             {
-                this->matriz_adyacencia[(this->capacidad * i) + indice_nodo] = false;
                 this->matriz_adyacencia[(this->capacidad * indice_nodo) + i] = false;
+                this->matriz_adyacencia[(this->capacidad * i) + indice_nodo] = false;
 
                 --this->lista_nodos[i]->grado;
             }
@@ -98,6 +99,11 @@ public:
         verificar_indice(indice_nodo_1, indice_nodo_2);
         verificar_existencia(indice_nodo_1);
         verificar_existencia(indice_nodo_2);
+
+        if (indice_nodo_1 == indice_nodo_2)
+        {
+            throw std::logic_error{ "No se permiten ciclos en un grafo simple." };
+        }
 
         this->matriz_adyacencia[(this->capacidad * indice_nodo_1) + indice_nodo_2] = enlazar;
         this->matriz_adyacencia[(this->capacidad * indice_nodo_2) + indice_nodo_1] = enlazar;
@@ -160,9 +166,22 @@ public:
     }
 
     // El usuario es el responsable de liberar la memoria
-    T *get_adjacent_nodes(int indice_nodo)
+    Lista<T> *get_adjacent_nodes(int indice_nodo)
     {
-        // por hacer
+        verificar_indice(indice_nodo);
+        verificar_existencia(indice_nodo);
+
+        Lista<T> *nodos_adyacentes{ new Lista<T>{} };
+
+        for (int i{0}; i < this->capacidad; ++i)
+        {
+            if (this->matriz_adyacencia[(this->capacidad * indice_nodo) + i])
+            {
+                nodos_adyacentes->add(0, this->lista_nodos[i]->elemento);
+            }
+        }
+
+        return nodos_adyacentes;
     }
 
     void print_matrix()
