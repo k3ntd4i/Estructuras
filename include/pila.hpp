@@ -25,9 +25,9 @@ public:
         return lista.get(0);
     }
 
-    void push(T x)
+    void push(const T &elemento)
     {
-        lista.add(0, x);
+        lista.add(0, elemento);
     }
 
     T pop()
