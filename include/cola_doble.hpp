@@ -30,14 +30,14 @@ public:
         return lista.get(lista.length());
     }
 
-    void push_front(T x)
+    void push_front(const T &elemento)
     {
-        lista.add(0, x);
+        lista.add(0, elemento);
     }
 
-    void push_back(T x)
+    void push_back(const T &elemento)
     {
-        lista.add(lista.size(), x);
+        lista.add(lista.size(), elemento);
     }
 
     T pop_front()

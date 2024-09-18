@@ -115,7 +115,7 @@ public:
         {
             throw std::out_of_range{ "Indice fuera de rango." };
         }
-        
+
         Nodo *nuevo_nodo{ new Nodo{nuevo_elemento} };
 
         if (posicion == 0)

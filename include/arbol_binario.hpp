@@ -139,9 +139,9 @@ public:
         this->hijo_derecho = sub_arbol_derecho;
     }
 
-    void set_element(const T &dato)
+    void set_element(const T &nuevo_elemento)
     {
-        this->elemento = dato;
+        this->elemento = nuevo_elemento;
     }
 
     void decrease_frequency()

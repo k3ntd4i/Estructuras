@@ -30,12 +30,12 @@ public:
         return lista.get(lista.length());
     }
 
-    void put(T x)
+    void push(const T &elemento)
     {
-        lista.add(lista.size(), x);
+        lista.add(lista.size(), elemento);
     }
 
-    T remove()
+    T pop()
     {
         return lista.remove(0);
     }

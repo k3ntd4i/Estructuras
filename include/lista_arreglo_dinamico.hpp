@@ -49,7 +49,7 @@ public:
         return this->arreglo[posicion];
     }
 
-    int index_of(T x)
+    int index_of(const T &x)
     {
         for (int i{0}; i < this->longitud; i++)
         {
@@ -77,7 +77,7 @@ public:
         return elemento_removido;
     }
 
-    void add(int posicion, T x)
+    void add(int posicion, const T &elemento)
     {
         if (posicion < 0 || posicion > this->longitud)
         {
@@ -103,7 +103,7 @@ public:
             this->arreglo[i + 1] = this->arreglo[i];
         }
 
-        this->arreglo[posicion] = x;
+        this->arreglo[posicion] = elemento;
         this->longitud ++;
     }
 
