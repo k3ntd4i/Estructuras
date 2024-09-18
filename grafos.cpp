@@ -133,24 +133,31 @@ int main()
 
     delete grafo.remove_node(0);
 
-    std::cout << "\n Grafo 2 -----------------------------------\n";
+    std::cout << "\n- Grafo 2 -----------------------------------\n";
 
-    GrafoSimple<std::string> otro_grafo{ 6 };
+    GrafoSimple<std::string> otro_grafo{ 10 };
 
-    otro_grafo.set_node(0, "Empresa 1");
-    otro_grafo.set_node(1, "Empresa 2");
-    otro_grafo.set_node(2, "Empresa 3");
-    otro_grafo.set_node(3, "Empresa 4");
-    otro_grafo.set_node(4, "Empresa 5");
-    otro_grafo.set_node(5, "Empresa 6");
+    otro_grafo.set_node(0, "Empresa 0");
+    otro_grafo.set_node(1, "Empresa 1");
+    otro_grafo.set_node(2, "Empresa 2");
+    otro_grafo.set_node(3, "Empresa 3");
+    otro_grafo.set_node(4, "Empresa 4");
+    otro_grafo.set_node(5, "Empresa 5");
+    otro_grafo.set_node(6, "Empresa 6");
+    otro_grafo.set_node(7, "Empresa 7");
+    otro_grafo.set_node(8, "Empresa 8");
+    otro_grafo.set_node(9, "Empresa 9");
 
     otro_grafo.update_edge(0, 1, true);
-    otro_grafo.update_edge(0, 3, true);
-    otro_grafo.update_edge(1, 3, true);
+    otro_grafo.update_edge(0, 2, true);
     otro_grafo.update_edge(1, 4, true);
-    otro_grafo.update_edge(3, 4, true);
-    otro_grafo.update_edge(4, 2, true);
-    otro_grafo.update_edge(2, 5, true);
+    otro_grafo.update_edge(1, 3, true);
+    otro_grafo.update_edge(5, 3, true);
+    otro_grafo.update_edge(5, 6, true);
+    otro_grafo.update_edge(5, 7, true);
+    otro_grafo.update_edge(5, 8, true);
+    otro_grafo.update_edge(8, 7, true);
+    otro_grafo.update_edge(8, 9, true);
 
     std::cout << '\n';
     otro_grafo.print_matrix();
@@ -167,6 +174,11 @@ int main()
         delete adyacentes;
         std::cout << '\n';
     }
+
+    std::cout << "\nDFS: ";
+    otro_grafo.depth_first_search(0);
+    std::cout << "\nBFS: ";
+    otro_grafo.bradth_first_search(0);
 
     return 0;
 }
