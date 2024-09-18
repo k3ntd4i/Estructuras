@@ -80,5 +80,5 @@ Un grafo simple se define como un grafo no dirigido que no admite más de una ar
   - [ ] Red-Black
   - [x] Max/Min-Heap
 - [ ] n-Árbol
-- [ ] Grafo
+- [x] Grafo
 - [ ] Tabla Hash
