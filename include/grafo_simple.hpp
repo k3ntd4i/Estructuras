@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <string>
 #include "lista.hpp"
+#include "cola.hpp"
 
 template <typename T>
 class GrafoSimple
@@ -196,7 +197,66 @@ public:
         }
     }
 
-    // hacer recorridos
+private:
+    int iterador{};
+
+public:
+    void depth_first_search(int indice_nodo)
+    {
+        verificar_indice(indice_nodo);
+        verificar_existencia(indice_nodo);
+
+        bool visitado[this->capacidad] {};
+        this->iterador = 0;
+
+        std::cout << '[';
+        depth_first_search_recursivo(indice_nodo, visitado);
+        std::cout << ']';
+    }
+
+    void bradth_first_search(int indice_nodo)
+    {
+        verificar_indice(indice_nodo);
+        verificar_existencia(indice_nodo);
+
+        bool visitado[this->capacidad] {};
+        Cola<int> cola{};
+        cola.push(indice_nodo);
+
+        this->iterador = 0;
+
+        std::cout << '[';
+
+        int v{};
+        while (cola.size() > 0)
+        {
+            v = cola.pop();
+            if (visitado[v])
+            {
+                continue;
+            }
+
+            std::cout << this->lista_nodos[v]->elemento;
+            ++this->iterador;
+
+            if (this->iterador < this->cantidad_nodos)
+            {
+                std::cout << ", ";
+            }
+
+            visitado[v] = true;
+
+            for (int i{0}; i < this->capacidad; ++i)
+            {
+                if (this->matriz_adyacencia[(this->capacidad * v) + i] && !visitado[i])
+                {
+                    cola.push(i);
+                }
+            }
+        }
+
+        std::cout << ']';
+    }
 
 private:
     void verificar_indice(int posicion)
@@ -216,14 +276,35 @@ private:
         }
     }
 
-    void verificar_existencia(int indice)
+    void verificar_existencia(int indice_nodo)
     {
-        if (this->lista_nodos[indice] == nullptr)
+        if (this->lista_nodos[indice_nodo] == nullptr)
         {
             throw std::invalid_argument
             {
-                "El nodo con indice " + std::to_string(indice) + " no existe."
+                "El nodo con indice " + std::to_string(indice_nodo) + " no existe."
             };
+        }
+    }
+
+    void depth_first_search_recursivo(int indice_nodo, bool *visitado)
+    {
+        std::cout << this->lista_nodos[indice_nodo]->elemento;
+        ++this->iterador;
+
+        if (this->iterador < this->cantidad_nodos)
+        {
+            std::cout << ", ";
+        }
+
+        visitado[indice_nodo] = true;
+
+        for (int i{0}; i < this->capacidad; ++i)
+        {
+            if (this->matriz_adyacencia[(this->capacidad * indice_nodo) + i] && !visitado[i])
+            {
+                depth_first_search_recursivo(i, visitado);
+            }
         }
     }
 };
