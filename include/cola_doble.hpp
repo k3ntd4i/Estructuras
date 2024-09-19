@@ -32,12 +32,12 @@ public:
 
     void push_front(const T &elemento)
     {
-        lista.add(0, elemento);
+        lista.insert(0, elemento);
     }
 
     void push_back(const T &elemento)
     {
-        lista.add(lista.size(), elemento);
+        lista.insert(lista.size(), elemento);
     }
 
     T pop_front()

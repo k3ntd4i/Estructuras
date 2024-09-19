@@ -27,7 +27,7 @@ public:
 
     void push(const T &elemento)
     {
-        lista.add(0, elemento);
+        lista.insert(0, elemento);
     }
 
     T pop()

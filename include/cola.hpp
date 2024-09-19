@@ -32,7 +32,7 @@ public:
 
     void push(const T &elemento)
     {
-        lista.add(lista.size(), elemento);
+        lista.insert(lista.size(), elemento);
     }
 
     T pop()

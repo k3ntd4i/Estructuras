@@ -178,7 +178,7 @@ public:
         {
             if (this->matriz_adyacencia[(this->capacidad * indice_nodo) + i])
             {
-                nodos_adyacentes->add(0, this->lista_nodos[i]->elemento);
+                nodos_adyacentes->insert(0, this->lista_nodos[i]->elemento);
             }
         }
 

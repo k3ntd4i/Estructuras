@@ -77,7 +77,7 @@ public:
         return elemento_removido;
     }
 
-    void add(int posicion, const T &elemento)
+    void insert(int posicion, const T &elemento)
     {
         if (posicion < 0 || posicion > this->longitud)
         {

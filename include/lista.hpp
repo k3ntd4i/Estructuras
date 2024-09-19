@@ -109,7 +109,7 @@ public:
         return elemento_removido;
     }
 
-    void add(int posicion, const T &nuevo_elemento)
+    void insert(int posicion, const T &nuevo_elemento)
     {
         if (posicion < 0 || posicion > this->longitud)
         {
@@ -138,17 +138,15 @@ public:
     {
         std::cout << "[";
 
-        Nodo *nodo_actual{ this->raiz };
-        int indice_maximo{ this->longitud - 1 };
-
-        for (int i{0}; i < this->longitud; ++i)
+        if (this->longitud > 0)
         {
-            std::cout << nodo_actual->elemento;
-            nodo_actual = nodo_actual->nodo_siguiente;
+            Nodo *nodo_actual{ this->raiz };
 
-            if (i < indice_maximo)
+            std::cout << nodo_actual->elemento;
+            for (int i{1}; i < this->longitud; ++i)
             {
-                std::cout << ", ";
+                nodo_actual = nodo_actual->nodo_siguiente;
+                std::cout << ", " << nodo_actual->elemento;
             }
         }
 
