@@ -136,7 +136,7 @@ public:
 
     void output()
     {
-        std::cout << "[";
+        std::cout << '[';
 
         if (this->longitud > 0)
         {
@@ -150,7 +150,7 @@ public:
             }
         }
 
-        std::cout << "]";
+        std::cout << ']';
     }
 
 private:
