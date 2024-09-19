@@ -11,6 +11,7 @@ class TablaHash
     struct Node
     {
         T elemento{};
+        bool inactivo{};
 
         Node() = default;
 
@@ -64,7 +65,7 @@ public:
         return this->longitud;
     }
 
-    void remove()
+    void remove(std::string_view clave)
     {
 
     }
@@ -73,16 +74,27 @@ public:
     {
         if (this->longitud > (this->capacidad / 2) || this->longitud == this->capacidad)
         {
+            int capacidad_anterior{ this->capacidad };
             Node **nuevo_arreglo{ new Node*[this->capacidad * 2]{} };
 
-            for (int i{0}; i < this->capacidad; ++i)
+            this->capacidad = this->capacidad * 2;
+
+            for (int i{0}; i < capacidad_anterior; ++i)
             {
-                nuevo_arreglo[i] = this->arreglo[i];
+                if (this->arreglo[i] != nullptr)
+                {
+                    int indice{ hash_code(clave) % this->capacidad };
+
+                    while (nuevo_arreglo[indice] != nullptr)
+                    {
+                        indice = ((indice * 227) + 1) % this->capacidad;
+                    }
+
+                    nuevo_arreglo[indice] = this->arreglo[i];
+                }
             }
 
-            this->capacidad = this->capacidad * 2;
             delete[] this->arreglo;
-
             this->arreglo = nuevo_arreglo;
         }
 
@@ -91,14 +103,13 @@ public:
         while (this->arreglo[indice] != nullptr)
         {
             indice = ((indice * 227) + 1) % this->capacidad;
-        } 
+        }
 
         this->arreglo[indice] = new Node{ valor };
-
         ++this->longitud;
     }
 
-    void search()
+    T search(std::string_view clave)
     {
 
     }
