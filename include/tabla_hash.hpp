@@ -76,49 +76,24 @@ public:
     {
         if (this->longitud > (this->capacidad / 2) || this->longitud == this->capacidad)
         {
-            int capacidad_anterior{ this->capacidad };
-            Node **nuevo_arreglo{ new Node*[this->capacidad * 2]{} };
+            Node **arreglo_anterior{ this->arreglo };
+            this->arreglo = new Node*[this->capacidad * 2]{};
 
+            int capacidad_anterior{ this->capacidad };
             this->capacidad = this->capacidad * 2;
 
-            for (int i{0}; (i < capacidad_anterior) && (this->arreglo[i] != nullptr); ++i)
+            for (int i{0}; i < capacidad_anterior; ++i)
             {
-                int indice{ hash_code(this->arreglo[i]->clave) % this->capacidad };
-
-                int veces{ 0 };
-                while (nuevo_arreglo[indice] != nullptr)
+                if (arreglo_anterior[i] != nullptr)
                 {
-                    if (veces > this->capacidad)
-                    {
-                        throw std::range_error{ "Se murio la tabla :c" };
-                    }
-
-                    indice = ((indice * 227) + 1) % this->capacidad;
-                    ++veces;
+                    this->arreglo[get_indice(arreglo_anterior[i]->clave)] = arreglo_anterior[i];
                 }
-
-                nuevo_arreglo[indice] = this->arreglo[i];
             }
 
-            delete[] this->arreglo;
-            this->arreglo = nuevo_arreglo;
+            delete[] arreglo_anterior;
         }
 
-        int indice{ hash_code(clave) % this->capacidad };
-
-        int veces{ 0 };
-        while (this->arreglo[indice] != nullptr)
-        {
-            if (veces > this->capacidad)
-            {
-                throw std::range_error{ "Se murio la tabla :c" };
-            }
-
-            indice = ((indice * 227) + 1) % this->capacidad;
-            ++veces;
-        }
-
-        this->arreglo[indice] = new Node{ valor, clave };
+        this->arreglo[get_indice(clave)] = new Node{ clave, valor };
         ++this->longitud;
     }
 
@@ -140,15 +115,11 @@ public:
 
     void output()
     {
-        std::cout << "[";
+        std::cout << '[';
 
         if (this->longitud > 0)
         {
-            if (this->arreglo[0] == nullptr)
-            {
-                std::cout << "";
-            }
-            else
+            if (this->arreglo[0] != nullptr)
             {
                 std::cout << this->arreglo[0]->valor;
             }
@@ -157,17 +128,33 @@ public:
             {
                 std::cout << ", ";
 
-                if (this->arreglo[i] == nullptr)
-                {
-                    std::cout << "";
-                }
-                else
+                if (this->arreglo[i] != nullptr)
                 {
                     std::cout << this->arreglo[i]->valor;
                 }
             }
         }
 
-        std::cout << "]";
+        std::cout << ']';
+    }
+
+private:
+    int get_indice(std::string_view clave)
+    {
+        int indice{ hash_code(clave) % this->capacidad };
+
+        int veces{ 0 };
+        while (this->arreglo[indice] != nullptr)
+        {
+            if (veces > this->capacidad)
+            {
+                throw std::range_error{ "Se murio la tabla :c" };
+            }
+
+            indice = ((indice * 227) + 1) % this->capacidad;
+            ++veces;
+        }
+
+        return indice;
     }
 };
