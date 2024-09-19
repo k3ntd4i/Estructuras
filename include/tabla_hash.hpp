@@ -148,7 +148,7 @@ private:
         {
             if (veces > this->capacidad)
             {
-                throw std::range_error{ "Se murio la tabla :c" };
+                throw std::range_error{ "No fue posible encontrar una posicion disponible." };
             }
 
             indice = ((indice * 227) + 1) % this->capacidad;
