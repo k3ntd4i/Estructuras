@@ -1,7 +1,5 @@
 #pragma once
 
-#include <iostream>
-#include <cmath>
 #include <string>
 #include <string_view>
 #include <stdexcept>
@@ -61,7 +59,6 @@ public:
     int hash_code(std::string_view llave)
     {
         int sumatoria{ 0 };
-        
         for (int i{0}; i < llave.length(); ++i)
         {
             sumatoria += llave[i] * 37;
