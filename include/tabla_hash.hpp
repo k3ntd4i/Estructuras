@@ -10,13 +10,15 @@ class TablaHash
 {
     struct Node
     {
-        T elemento{};
+        std::string clave{};
+        T valor{};
         bool inactivo{};
 
         Node() = default;
 
-        Node(const T &nuevo_elemento)
-            : elemento{ nuevo_elemento }
+        Node(const std::string &nueva_clave, const T &nuevo_valor)
+            : clave{ nueva_clave }
+            , valor{ nuevo_valor }
         {
         }
     };
@@ -70,7 +72,7 @@ public:
 
     }
 
-    void insert(std::string_view clave, const T &valor)
+    void insert(const std::string &clave, const T &valor)
     {
         if (this->longitud > (this->capacidad / 2) || this->longitud == this->capacidad)
         {
@@ -79,19 +81,23 @@ public:
 
             this->capacidad = this->capacidad * 2;
 
-            for (int i{0}; i < capacidad_anterior; ++i)
+            for (int i{0}; (i < capacidad_anterior) && (this->arreglo[i] != nullptr); ++i)
             {
-                if (this->arreglo[i] != nullptr)
-                {
-                    int indice{ hash_code(clave) % this->capacidad };
+                int indice{ hash_code(this->arreglo[i]->clave) % this->capacidad };
 
-                    while (nuevo_arreglo[indice] != nullptr)
+                int veces{ 0 };
+                while (nuevo_arreglo[indice] != nullptr)
+                {
+                    if (veces > this->capacidad)
                     {
-                        indice = ((indice * 227) + 1) % this->capacidad;
+                        throw std::range_error{ "Se murio la tabla :c" };
                     }
 
-                    nuevo_arreglo[indice] = this->arreglo[i];
+                    indice = ((indice * 227) + 1) % this->capacidad;
+                    ++veces;
                 }
+
+                nuevo_arreglo[indice] = this->arreglo[i];
             }
 
             delete[] this->arreglo;
@@ -100,12 +106,19 @@ public:
 
         int indice{ hash_code(clave) % this->capacidad };
 
+        int veces{ 0 };
         while (this->arreglo[indice] != nullptr)
         {
+            if (veces > this->capacidad)
+            {
+                throw std::range_error{ "Se murio la tabla :c" };
+            }
+
             indice = ((indice * 227) + 1) % this->capacidad;
+            ++veces;
         }
 
-        this->arreglo[indice] = new Node{ valor };
+        this->arreglo[indice] = new Node{ valor, clave };
         ++this->longitud;
     }
 
@@ -137,7 +150,7 @@ public:
             }
             else
             {
-                std::cout << this->arreglo[0]->elemento;
+                std::cout << this->arreglo[0]->valor;
             }
 
             for (int i{1}; i < this->capacidad; i++)
@@ -150,7 +163,7 @@ public:
                 }
                 else
                 {
-                    std::cout << this->arreglo[i]->elemento;
+                    std::cout << this->arreglo[i]->valor;
                 }
             }
         }
