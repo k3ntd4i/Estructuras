@@ -156,7 +156,7 @@ public:
                 std::cout << this->arreglo[0]->valor;
             }
 
-            for (int i{1}; i < this->capacidad; i++)
+            for (int i{1}; i < this->capacidad; ++i)
             {
                 std::cout << ", ";
 
