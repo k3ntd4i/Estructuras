@@ -67,9 +67,18 @@ public:
         return this->longitud;
     }
 
-    void remove(std::string_view clave)
+    T remove(std::string_view clave)
     {
+        int indice{ get_indice(clave, false) };
 
+        if (indice == -1)
+        {
+            throw std::invalid_argument{ "No existe un valor correspondiente." };
+        }
+
+        this->arreglo[indice]->inactivo = true;
+
+        return this->arreglo[indice]->valor;
     }
 
     void insert(const std::string &clave, const T &valor)
@@ -108,7 +117,7 @@ public:
     {
         int indice{ get_indice(clave, false) };
 
-        if (this->arreglo[indice] == nullptr || indice == -1)
+        if (indice == -1 || this->arreglo[indice] == nullptr || this->arreglo[indice]->inactivo)
         {
             throw std::invalid_argument{ "No existe un valor correspondiente." };
         }
@@ -158,7 +167,7 @@ private:
         int indice{ hash_code(clave) % this->capacidad };
 
         int veces{ 0 };
-        while (this->arreglo[indice] != nullptr)
+        while (this->arreglo[indice] != nullptr && !this->arreglo[indice]->inactivo)
         {
             if (veces > this->capacidad)
             {
