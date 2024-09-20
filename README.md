@@ -26,6 +26,10 @@ La matriz de adyacencia se implementa como un arreglo unidimensional para evitar
 
 El método `get_adjacent_nodes` devuelve una dirección a una estructura `Lista` creada usando `new`, por lo tanto, EL USUARIO DEBE LIBERAR LA MEMORIA. Esto implica crear una variable de tipo puntero hacia una estructura `Lista` para poder hacer `delete` luego de utilizar dicho método.
 
+### `TablaHash`
+
+La tabla se define por defecto con una longitud de $`11`$, aunque sea el estándar, parece que hay bastantes colisiones si no se utilizan claves muy diferentes, por lo tanto, se recomienda inicializar la tabla con un primo mayor a $`100`$. (Además las tablas hash se suelen utilizar solo cuando se necesitan almacenar muchos valores)
+
 ## Repositorio
 
 En el directorio `include` se encuentran las implementaciones de las estructuras con la extension `.hpp`, es decir, a modo encabezado (`#include <encabezado>`). En este caso, al ser un encabezado propio, para poder incluir los archivos se deben usar comillas dobles y escribir la ruta relativa (la ubicación del archivo `.hpp` respecto al archivo `.cpp` en el que se está incluyendo): Ej: `#include "include/encabezado.hpp"`.
@@ -61,6 +65,12 @@ Hay soporte para valores repetidos. Cada nodo tiene un contador que refleja la c
 
 Un grafo simple se define como un grafo no dirigido que no admite más de una arista entre dos nodos.
 
+### Tabla Hash
+
+Las colisiones se manejan con un direccionamiento abierto de doble hash
+
+El _rehashing_ sucede cuando el numero de elementos en la tabla supera la mitad de la capacidad del arreglo
+
 ## Tareas
 
 ### Características
@@ -73,12 +83,11 @@ Un grafo simple se define como un grafo no dirigido que no admite más de una ar
   - [x] Pila
   - [x] Cola
   - [x] Cola Doble
-  - [ ] Arreglo dinámico
+- [ ] n-Árbol
 - [x] Árbol Binario
   - [x] BST
-  - [ ] AVL
-  - [ ] Red-Black
-  - [x] Max/Min-Heap
-- [ ] n-Árbol
+- [ ] AVL
+- [ ] Red-Black
+- [x] Max/Min-Heap
 - [x] Grafo
 - [x] Tabla Hash
