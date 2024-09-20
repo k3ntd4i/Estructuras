@@ -74,6 +74,7 @@ public:
 
     void insert(const std::string &clave, const T &valor)
     {
+        int indice{};
         if (this->longitud > (this->capacidad / 2) || this->longitud == this->capacidad)
         {
             Node **arreglo_anterior{ this->arreglo };
@@ -86,20 +87,33 @@ public:
             {
                 if (arreglo_anterior[i] != nullptr)
                 {
-                    this->arreglo[get_indice(arreglo_anterior[i]->clave)] = arreglo_anterior[i];
+                    indice = get_indice(arreglo_anterior[i]->clave, true);
+                    if (indice == -1) { return; }
+
+                    this->arreglo[indice] = arreglo_anterior[i];
                 }
             }
 
             delete[] arreglo_anterior;
         }
 
-        this->arreglo[get_indice(clave)] = new Node{ clave, valor };
+        indice = get_indice(clave, true);
+        if (indice == -1) { return; }
+
+        this->arreglo[get_indice(clave, true)] = new Node{ clave, valor };
         ++this->longitud;
     }
 
     T search(std::string_view clave)
     {
+        int indice{ get_indice(clave, false) };
 
+        if (this->arreglo[indice] == nullptr || indice == -1)
+        {
+            throw std::invalid_argument{ "No existe un valor correspondiente." };
+        }
+
+        return this->arreglo[indice]->valor;
     }
 
     int hash_code(std::string_view clave)
@@ -139,7 +153,7 @@ public:
     }
 
 private:
-    int get_indice(std::string_view clave)
+    int get_indice(std::string_view clave, bool insertar)
     {
         int indice{ hash_code(clave) % this->capacidad };
 
@@ -148,7 +162,17 @@ private:
         {
             if (veces > this->capacidad)
             {
-                throw std::range_error{ "No fue posible encontrar una posicion disponible." };
+                if (insertar)
+                {
+                    throw std::range_error{ "No fue posible encontrar una posicion disponible." };
+                }
+
+                return -1;
+            }
+
+            if (this->arreglo[indice]->clave == clave)
+            {
+                return (insertar) ? -1 : indice;
             }
 
             indice = ((indice * 227) + 1) % this->capacidad;
