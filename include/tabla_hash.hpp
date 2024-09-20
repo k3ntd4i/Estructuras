@@ -19,6 +19,7 @@ class TablaHash
         Node(const std::string &nueva_clave, const T &nuevo_valor)
             : clave{ nueva_clave }
             , valor{ nuevo_valor }
+            , inactivo{ false }
         {
         }
     };
@@ -71,19 +72,19 @@ public:
     {
         int indice{ get_indice(clave, false) };
 
-        if (indice == -1)
+        if (indice == -1 || this->arreglo[indice] == nullptr)
         {
             throw std::invalid_argument{ "No existe un valor correspondiente." };
         }
 
         this->arreglo[indice]->inactivo = true;
 
+        --this->longitud;
         return this->arreglo[indice]->valor;
     }
 
     void insert(const std::string &clave, const T &valor)
     {
-        int indice{};
         if (this->longitud > (this->capacidad / 2) || this->longitud == this->capacidad)
         {
             Node **arreglo_anterior{ this->arreglo };
@@ -96,20 +97,28 @@ public:
             {
                 if (arreglo_anterior[i] != nullptr)
                 {
-                    indice = get_indice(arreglo_anterior[i]->clave, true);
-                    if (indice == -1) { return; }
-
-                    this->arreglo[indice] = arreglo_anterior[i];
+                    this->arreglo[get_indice(arreglo_anterior[i]->clave, true)] = arreglo_anterior[i];
                 }
             }
 
             delete[] arreglo_anterior;
         }
 
-        indice = get_indice(clave, true);
+        int indice{ get_indice(clave, true) };
         if (indice == -1) { return; }
 
-        this->arreglo[get_indice(clave, true)] = new Node{ clave, valor };
+        Node *nodo{ this->arreglo[indice] };
+        if (nodo != nullptr && nodo->inactivo)
+        {
+            nodo->clave = clave;
+            nodo->valor = valor;
+            nodo->inactivo = false;
+        }
+        else
+        {
+            this->arreglo[indice] = new Node{ clave, valor };
+        }
+
         ++this->longitud;
     }
 
@@ -142,7 +151,7 @@ public:
 
         if (this->longitud > 0)
         {
-            if (this->arreglo[0] != nullptr)
+            if (this->arreglo[0] != nullptr && !this->arreglo[0]->inactivo)
             {
                 std::cout << this->arreglo[0]->valor;
             }
@@ -151,7 +160,7 @@ public:
             {
                 std::cout << ", ";
 
-                if (this->arreglo[i] != nullptr)
+                if (this->arreglo[i] != nullptr && !this->arreglo[i]->inactivo)
                 {
                     std::cout << this->arreglo[i]->valor;
                 }
